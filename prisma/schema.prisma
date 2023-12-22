@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id       String    @id @default(uuid())
+  username String    @unique
+  email    String    @unique
+  domicile String
+  contact  String
+  about    String 
+  password String
+  adopters Adopter[]
+  pets     Pet[]
+  reviews  Review[]
+
+  @@index([domicile])
+}
+
+model Pet {
+  id            String  @id @default(uuid())
+  name          String
+  slug          String  @unique
+  image         String
+  description   String
+  breed         String?
+  category      String
+  gender        String
+  health_status String
+  age           Int?
+  isAdopted     Boolean
+  stories       Story[]
+  userId        String
+
+  users User @relation(fields: [userId], references: [id])
+
+  @@index([slug])
+}
+
+model Adopter {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String   @unique
+  address   String
+  isAdopter Boolean
+  reviews   Review[]
+  stories   Story[]
+  userId    String
+  users     User     @relation(fields: [userId], references: [id])
+}
+
+model Review {
+  id        String @id @default(uuid())
+  text      String
+  adopterId String
+  userId    String
+
+  adopter Adopter @relation(fields: [adopterId], references: [id])
+  users   User    @relation(fields: [userId], references: [id])
+}
+
+model Story {
+  id        String  @id @default(uuid())
+  text      String
+  rating    Int
+  adopterId String
+  petId     String
+  adopter   Adopter @relation(fields: [adopterId], references: [id])
+  pets      Pet     @relation(fields: [petId], references: [id])
+}
