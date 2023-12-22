@@ -1,4 +1,4 @@
-# Project Digicommerce
+# Project Adopt Hunt
 
 ## How to use
 
