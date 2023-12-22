@@ -1,2 +1,2 @@
-export const apiUrl = "https://adopt-hunt.vercel.app/api";
-export const imageUrl = "https://ik.imagekit.io/5is75rwdb";
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+export const imageUrl = process.env.NEXT_PUBLIC_IMG_URL;
