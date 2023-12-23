@@ -17,7 +17,7 @@ model User {
   email    String    @unique
   domicile String
   contact  String
-  about    String 
+  about    String
   password String
   adopters Adopter[]
   pets     Pet[]
@@ -61,7 +61,7 @@ model Adopter {
 
 model Review {
   id        String @id @default(uuid())
-  text      String
+  content   String
   adopterId String
   userId    String
 
@@ -71,7 +71,7 @@ model Review {
 
 model Story {
   id        String  @id @default(uuid())
-  text      String
+  content   String
   rating    Int
   adopterId String
   petId     String
