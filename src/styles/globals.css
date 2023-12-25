@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply h-full;
+  }
+
+  body {
+    font-family: var(--font-inter);
+  }
+
+  h1 {
+    font-family: var(--font-jua);
+    @apply text-4xl lg:text-5xl;
+  }
+
+  h2 {
+    font-family: var(--font-jua);
+    @apply text-3xl lg:text-4xl;
+  }
+
+  a:not([role="button"]) {
+    @apply hover:text-oren transition-all;
+  }
+
+  .font-jua {
+    font-family: var(--font-jua);
+  }
+
+  .default-layout::before {
+    content: "";
+    @apply absolute top-0 left-0 right-0 h-[220px] bg-oren-light z-10;
+  }
+
+  /* To make the footer stay at the bottom despite there's not enough content */
+  /* Not sure from where these div come */
+  body > div[data-overlay-container="true"] {
+    @apply h-full;
+  }
+}
