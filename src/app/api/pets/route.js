@@ -1,5 +1,9 @@
 import prisma from "@/utils/prisma";
 import { NextResponse } from "next/server";
+import { verify } from "jsonwebtoken";
+import { cookies } from "next/headers";
+import slugify from "slugify";
+import { uploadFile } from "@/lib/uploadFile";
 
 export async function GET(request) {
   try {
@@ -95,7 +99,6 @@ export async function GET(request) {
         return NextResponse.json({ pets: [] }, { status: 200 });
       }
     }
-
   } catch (error) {
     console.error("Error in GET request:", error);
     return NextResponse.json(
@@ -103,4 +106,84 @@ export async function GET(request) {
       { status: 500 }
     );
   }
+}
+
+export async function POST(request) {
+  const formData = await request.formData();
+  const name = formData.get("name");
+  const image = formData.getAll("image");
+  const description = formData.get("description");
+  const breed = formData.get("breed");
+  const category = formData.get("category");
+  const gender = formData.get("gender");
+  const health_status = formData.get("health_status");
+  const age = formData.get("age");
+  const isAdopted = formData.get("isAdopted");
+
+  //get userId from token
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
+  const decodedToken = verify(token, process.env.JWT_SECRET);
+  const userId = decodedToken.id;
+
+  let petId = "";
+
+  // save pet to database
+  try {
+    const allImages = [];
+    image.forEach((image) => {
+      allImages.push(image.name);
+    });
+
+    const addPet = await prisma.pet.create({
+      data: {
+        name,
+        slug: slugify(name, { lower: true, replacement: "-" }),
+        image: allImages,
+        description,
+        breed,
+        category,
+        gender,
+        health_status,
+        age,
+        isAdopted: Boolean(isAdopted),
+        userId,
+      },
+    });
+
+    petId = addPet.id;
+    console.log(addPet);
+  } catch (error) {
+    console.log(error);
+  }
+  // Send Image ke AWS S3
+  try {
+    //   Upload featured image file
+    const uploadFeaturedImage = await uploadFile({
+      Body: image,
+      Key: image.name,
+      ContentType: image.type,
+      Dir: `pets/${petId}`,
+    });
+    console.log(uploadFeaturedImage);
+
+    //   Upload images file
+    image.forEach(async (item) => {
+      const uploadFeaturedImage = await uploadFile({
+        Body: item,
+        Key: item.name,
+        ContentType: item.type,
+        Dir: `pets/${petId}`,
+      });
+      console.log(uploadFeaturedImage);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  return NextResponse.json(
+    {
+      message: "Add Pet successfully",
+    },
+    { status: 201 }
+  );
 }
