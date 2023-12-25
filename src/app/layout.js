@@ -1,10 +1,12 @@
 import { Inter, Jua } from "next/font/google";
 import { Provider } from "@/components/provider";
-
 import "@/styles/globals.css";
 import { DefaultLayout } from "@/components/template/DefaultLayout";
 
-export const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+export const inter = Inter({ 
+  subsets: ["latin"], 
+  variable: "--font-inter" 
+});
 
 export const jua = Jua({
   weight: "400",
