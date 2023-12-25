@@ -37,7 +37,7 @@ model Pet {
   gender        String
   health_status String
   age           Int?
-  isAdopted     Boolean
+  isAdopted     Boolean @default(false)
   stories       Story[]
   userId        String
 
