@@ -1,8 +1,20 @@
-import React from "react";
+"use client"
+
 import { Header } from "../Header";
 import { Footer } from "../Footer";
+import { usePathname } from "next/navigation";
 
 export const DefaultLayout = ({ children }) => {
+  const currentPath = usePathname();
+
+  if (
+    currentPath === "/login" ||
+    currentPath === "/register" ||
+    currentPath.startsWith("/dashboard")
+  ) {
+    return <>{children}</>;
+  }
+
   return (
     <div className="flex flex-col justify-between h-full default-layout">
       <div className="relative z-20">

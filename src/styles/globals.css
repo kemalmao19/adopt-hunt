@@ -22,6 +22,10 @@
     @apply text-3xl lg:text-4xl;
   }
 
+  a:not([role="button"]) {
+    @apply hover:text-oren transition-all;
+  }
+
   .font-jua {
     font-family: var(--font-jua);
   }
