@@ -1,6 +1,6 @@
 import prisma from "@/utils/prisma";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import {verify} from "jsonwebtoken";
 import { cookies } from "next/headers";
 import slugify from "slugify";
 import { uploadFile } from "@/lib/uploadFile";
@@ -119,16 +119,14 @@ export async function POST(request) {
   const health_status = formData.get("health_status");
   const age = formData.get("age");
   const isAdopted = formData.get("isAdopted");
-  const userId = "889c7d2e-e3ad-49cd-946d-96865ab10d0f"
 
   //get userId from token
-  // const cookieStore = cookies();
-  // const token = cookieStore.get("token");
-  // const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-  // const userId = decodedToken.id;
+  const cookieStore = cookies();
+  const token = cookieStore.get("token").value;
+  const decoded = verify(token, process.env.JWT_SECRET);
+  const userId = decoded.id;
 
   let petId = "";
-
   // save pet to database
   try {
     const allImages = [];
@@ -157,16 +155,7 @@ export async function POST(request) {
   }
   // Send Image ke AWS S3
   try {
-    //   Upload featured image file
-    const uploadFeaturedImage = await uploadFile({
-      Body: image,
-      Key: image.name,
-      ContentType: image.type,
-      Dir: `pets/${petId}`,
-    });
-    console.log(uploadFeaturedImage);
-
-    //   Upload images file
+     // Upload images file
     image.forEach(async (item) => {
       const uploadFeaturedImage = await uploadFile({
         Body: item,
