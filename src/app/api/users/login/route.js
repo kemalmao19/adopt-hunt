@@ -14,10 +14,11 @@ export async function POST(req) {
       },
     });
 
+    // Disabled, because we are not using it yet
     // Jika user belum verifikasi, kirim pesan error
-    if (findUser.verified === false) {
-      return NextResponse.json({ errorMessage: "Please verify your account first" }, { status: 401 });
-    }
+    // if (findUser.verified === false) {
+    //   return NextResponse.json({ errorMessage: "Please verify your account first" }, { status: 401 });
+    // }
 
     // Jika user tidak ditemukan, kirim pesan error
     if (!findUser) {
@@ -41,7 +42,7 @@ export async function POST(req) {
 
     // Buat token
     const token = sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
-    const res = NextResponse.json({ data: payload, message: "Login succesfully" }, { status: 200 });
+    const res = NextResponse.json({ data: payload, message: "Login succesfully, redirecting... 🚀" }, { status: 200 });
     res.cookies.set("token", token);
 
     return res;
