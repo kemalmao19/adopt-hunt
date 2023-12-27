@@ -1,9 +1,7 @@
-import React from 'react'
+import { Login } from '@/components/auth/components/Login'
 
 export default function Page() {
   return (
-    <>
-        <h1>Page login</h1>
-    </>
+    <Login/>
   )
 }
