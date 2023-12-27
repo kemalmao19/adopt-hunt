@@ -30,14 +30,14 @@ model Pet {
   id            String  @id @default(uuid())
   name          String
   slug          String  @unique
-  image         String
-  description   String
+  image         String[]
+  description   String?
   breed         String?
   category      String
   gender        String
   health_status String
   age           Int?
-  isAdopted     Boolean
+  isAdopted     Boolean @default(false)
   stories       Story[]
   userId        String
 
