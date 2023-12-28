@@ -30,7 +30,7 @@ model Pet {
   id            String  @id @default(uuid())
   name          String
   slug          String  @unique
-  image         String[]
+  images        String[]
   description   String?
   breed         String?
   category      String
