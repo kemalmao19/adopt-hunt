@@ -32,7 +32,7 @@
 
   .default-layout::before {
     content: "";
-    @apply absolute top-0 left-0 right-0 h-[220px] bg-oren-light z-10;
+    @apply absolute top-0 left-0 right-0 h-[200px] bg-oren-light z-10;
   }
 
   /* To make the footer stay at the bottom despite there's not enough content */
