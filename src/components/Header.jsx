@@ -15,7 +15,7 @@ export const Header = () => {
           />
         </Link>
         <Button
-          href={"/login"}
+          href={"/dashboard"}
           as={Link}
           color="default"
           className="text-white bg-black "
