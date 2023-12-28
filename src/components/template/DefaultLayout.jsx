@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Header } from "../Header";
 import { Footer } from "../Footer";
@@ -12,6 +12,7 @@ export const DefaultLayout = ({ children }) => {
   if (
     currentPath === "/login" ||
     currentPath === "/register" ||
+    currentPath === "/userProfile" ||
     currentPath.startsWith("/dashboard")
   ) {
     return <>{children}</>;
@@ -21,7 +22,7 @@ export const DefaultLayout = ({ children }) => {
     <div className="flex flex-col justify-between h-full default-layout">
       <div className="relative z-20">
         <Header />
-        { landingPage ? <Intro /> : null}
+        {landingPage ? <Intro /> : null}
         <main className="max-w-7xl w-full mx-auto py-5 lg:py-10 px-4 lg:px-10">
           {children}
         </main>
