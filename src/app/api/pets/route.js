@@ -16,6 +16,7 @@ export async function GET(request) {
 
     if (!(domicile || category || query)) {
       pets = await prisma.pet.findMany();
+      return NextResponse.json({ pets }, { status: 200 });
     }
 
     if (domicile && !category) {
