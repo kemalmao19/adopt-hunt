@@ -36,7 +36,6 @@ export const Header = () => {
           </Link>
           {isLogin && isClient ? (
             <Link href={"/dashboard"} className="pl-4 border-l border-black">
-              <Tooltip content="Pet owner profile">
                 <Chip
                   startContent={<CircleUser size={18} />}
                   variant="flat"
@@ -44,7 +43,6 @@ export const Header = () => {
                 >
                   {username}
                 </Chip>
-              </Tooltip>
             </Link>
           ) : null}
         </div>
