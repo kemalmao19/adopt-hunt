@@ -16,7 +16,7 @@ export const jua = Jua({
 
 export const metadata = {
   title: "Adopt Hunt",
-  description: "Final Assignment",
+  description: "Final Assignment - Pixlogic team",
   icons: {
     icon: "/lucide_paw-print.svg",
   },
