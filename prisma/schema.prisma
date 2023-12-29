@@ -52,7 +52,7 @@ model Adopter {
   email     String   @unique
   phone     String   @unique
   address   String
-  isAdopter Boolean
+  isAdopter Boolean? @default(false)
   reviews   Review[]
   stories   Story[]
   userId    String
