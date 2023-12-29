@@ -111,12 +111,12 @@ export async function GET(request) {
 export async function POST(request) {
   const formData = await request.formData();
   const name = formData.get("name");
-  const image = formData.getAll("image");
+  const images = formData.getAll("images");
   const description = formData.get("description");
   const breed = formData.get("breed");
   const category = formData.get("category");
   const gender = formData.get("gender");
-  const health_status = formData.get("health_status");
+  const health_status = formData.get("healthStatus");
   const age = formData.get("age");
   const isAdopted = formData.get("isAdopted");
 
@@ -125,18 +125,21 @@ export async function POST(request) {
   const token = cookieStore.get("token").value;
   const decoded = verify(token, process.env.JWT_SECRET);
   const userId = decoded.id;
+  // console.log(decoded)
+
+  // console.log({name, image, description, breed, category, gender, health_status, age, isAdopted, userId})
 
   let petId = "";
   // save pet to database
   try {
     const allImages = [];
-    image.forEach((x) => { allImages.push(x.name) });
+    images.forEach((x) => { allImages.push(x.name) });
 
     const addPet = await prisma.pet.create({
       data: {
         name,
         slug: slugify(name, { lower: true, replacement: "-" }),
-        image: allImages,
+        images: allImages,
         description,
         breed,
         category,
@@ -156,7 +159,7 @@ export async function POST(request) {
   // Send Image ke AWS S3
   try {
      // Upload images file
-    image.forEach(async (item) => {
+    images.forEach(async (item) => {
       const uploadFeaturedImage = await uploadFile({
         Body: item,
         Key: item.name,

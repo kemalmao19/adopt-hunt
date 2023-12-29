@@ -27,7 +27,7 @@ export const HeaderDashboard = () => {
             My Pets
           </Link>
           <Button
-            href={"/"}
+            href={"/dashboard/pets/add"}
             color="default"
             as={Link}
             className="text-white bg-black"
