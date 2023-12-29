@@ -54,10 +54,10 @@ export const MyPets = async () => {
             </section>
             <section className="flex justify-between items-center px-7 py-4 border-t-2 border-gray-200">
               <div className="flex space-x-4">
-                <div className="cursor-pointer text-green-500">Edit</div>
-                <div className="cursor-pointer text-red-500">Delete</div>
+                <div className="cursor-pointer text-green-500 text-xl">Edit</div>
+                <div className="cursor-pointer text-red-500 text-xl">Delete</div>
               </div>
-              <div className="cursor-pointer">View</div>
+              <div className="cursor-pointer text-xl">View</div>
             </section>
           </div>
         );
