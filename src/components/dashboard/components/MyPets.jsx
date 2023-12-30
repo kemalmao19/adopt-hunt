@@ -2,52 +2,38 @@ import React from "react";
 import { Pencil } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { Eye } from "lucide-react";
+import {checkEnvironment, imageUrl} from "@/config/apiUrl";
+import { cookies } from "next/headers";
 
 const fakeImage =
   "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1443&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 export const MyPets = async () => {
-  // dummy user pets data
-  const pets = [
-    {
-      name: "Title",
-      description: "Descriptions",
-      potentialAdopter: 5,
-      image: fakeImage,
-      isAdopted: true,
-    },
-    {
-      name: "JohnCat",
-      description: "ga tau ni hewan apa",
-      potentialAdopter: 3,
-      image: fakeImage,
-      isAdopted: false,
-    },
-    {
-      name: "Kitty",
-      description: "plis adopt this kitty",
-      potentialAdopter: 1,
-      image: fakeImage,
-      isAdopted: true,
-    },
-    {
-      name: "Kittler",
-      description: "we bring our glory",
-      potentialAdopter: 1,
-      image: fakeImage,
-      isAdopted: false,
-    },
-  ];
+
+  // get userid from cookies
+  const cookieStore = cookies()
+  const userid = cookieStore.get("id")
+
+  // fetch all user's pets data from database
+  const res = await fetch(checkEnvironment() + "/api/pets");
+  const {pets} = await res.json();
+
+  const userPets = pets.filter((pet) => pet.userId === userid);
 
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 my-20">
-      {pets.map((pet, index) => {
+      {userPets.map((pet, index) => {
+        let imageSize = "tr:w-300,h-200"
+        let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
+
         return (
           <div key={index} className="bg-white rounded-3xl border shadow-lg">
             <img
-              src={pet.image}
+              src={image}
               alt="pet"
               className="w-full h-auto rounded-t-3xl"
+              width={300}
+              height={150}
             />
             <section className="p-7 flex flex-col gap-8">
               <div className="space-y-1">
