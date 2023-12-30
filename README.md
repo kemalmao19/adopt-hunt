@@ -62,5 +62,5 @@ git commit -m "fix: login page not working"
 ```
 
 ```bash
-git commit -m "chore: update readme"
+git commit -m "chore: update readme test"
 ```
