@@ -1,0 +1,2 @@
+# ### test
+GET https://adopt-hunt.vercel.app/api/users
