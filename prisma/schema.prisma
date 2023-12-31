@@ -19,7 +19,6 @@ model User {
   contact  String
   bio      String
   password String
-  adopters Adopter[]
   pets     Pet[]
   reviews  Review[]
 
@@ -38,6 +37,7 @@ model Pet {
   health_status String
   age           Int?
   isAdopted     Boolean @default(false)
+  adopters      Adopter[]
   stories       Story[]
   userId        String
 
@@ -56,7 +56,8 @@ model Adopter {
   reviews   Review[]
   stories   Story[]
   userId    String
-  users     User     @relation(fields: [userId], references: [id])
+  petId     String
+  pets  Pet @relation(fields: [petId], references: [id])
 }
 
 model Review {
