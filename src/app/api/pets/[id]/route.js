@@ -1,7 +1,6 @@
 //fetch pet information
 import prisma from "@/utils/prisma";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 export async function GET(request, { params }) {
     const { id } = params;

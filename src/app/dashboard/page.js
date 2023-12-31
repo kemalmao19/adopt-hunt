@@ -3,7 +3,9 @@ import React from 'react'
 import { checkEnvironment } from '@/config/apiUrl';
 
 async function getPets() {
-  const res = await fetch(`${checkEnvironment()}/api/pets`);
+  const res = await fetch(`${checkEnvironment()}/api/pets`, {
+    cache: 'no-store',
+  });
   const { pets } = await res.json();
   return pets;
 }
