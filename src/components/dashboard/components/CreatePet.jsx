@@ -70,7 +70,7 @@ export const CreatePet = () => {
           <Input name="healthStatus" label="Health status" />
         </div>
         <Textarea name="description" label="Description" className="my-4" />
-        <Input name="images" type="file" multiple className="my-4" />
+        <input name="images" type="file" multiple className="my-4 block w-full bg-gray-100 rounded-xl p-2" />
         <Button
           isLoading={loading}
           isDisabled={loading}
