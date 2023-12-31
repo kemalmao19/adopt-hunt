@@ -5,7 +5,7 @@ export const PetsAvailable = ({ pets }) => {
   const availablePets = pets.filter((pet) => pet.isAdopted === false);
   return (
     <>
-      <h2 className="my-5">
+      <h2 id="pets" className="my-5">
         <span className="text-ungu">Pets</span> Available
       </h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 my-20">

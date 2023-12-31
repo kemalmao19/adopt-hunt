@@ -1,6 +1,7 @@
 //fetch pet information
 import prisma from "@/utils/prisma";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 export async function GET(request, { params }) {
     const { id } = params;
@@ -21,6 +22,17 @@ export async function PUT(request, { params }) {
             id,
         },
         data,
+    });
+    return NextResponse.json({ pet }, { status: 201 });
+}
+
+// delete pet information by id
+export async function DELETE(request, { params }) {
+    const { id } = params;
+    const pet = await prisma.pet.delete({
+        where: {
+            id,
+        },
     });
     return NextResponse.json({ pet }, { status: 200 });
 }

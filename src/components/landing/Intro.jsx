@@ -18,8 +18,8 @@ export const Intro = () => {
             <span className="text-gray-400"> ChatGPT</span>
           </p>
           <div className="text-center mt-5 lg:mt-10 space-x-4 space-y-4">
-            <Button href={"/"} as={Link} color="danger" className="bg-black">I'm the Pet Owner</Button>
-            <Button href={"/"} as={Link} color="default" variant="bordered" className="border-black">Adopter looking for new pet</Button>
+            <Button href={"/dashboard"} as={Link} color="danger" className="bg-black">I'm the Pet Owner</Button>
+            <Button href={"#pets"} as={Link} color="default" variant="bordered" className="border-black">Adopter looking for new pet</Button>
           </div>
         </div>
       </section>

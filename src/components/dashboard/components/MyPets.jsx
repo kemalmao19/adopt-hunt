@@ -1,9 +1,19 @@
+"use client";
 import React from "react";
 import { Pencil } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { Eye } from "lucide-react";
 import {imageUrl} from "@/config/apiUrl";
 import Link from "next/link";
+
+const deletePet = async (id) => {
+    const res = await fetch(`/api/pets/${id}`, {
+        method: "DELETE",
+    });
+    const data = await res.json();
+    window.location.reload();
+    return data;
+}
 
 export const MyPets = ({pets}) => {
   return (
@@ -37,15 +47,16 @@ export const MyPets = ({pets}) => {
           </section>
           <section className="flex justify-between items-center px-7 py-4 border-t-2 border-gray-200">
             <div className="flex space-x-4">
-              <Pencil
+              <Link href={`/dashboard/pets/update/${pet.id}`}><Pencil
                 strokeWidth={3}
                 className="cursor-pointer hover:scale-110"
                 color="green"
-              />
+              /></Link>
               <Trash2
                 strokeWidth={3}
                 className="cursor-pointer hover:scale-110"
                 color="red"
+                onClick={() => deletePet(pet.id)}
               />
             </div>
             <Link href={`/dashboard/pets/${pet.id}`}><Eye
