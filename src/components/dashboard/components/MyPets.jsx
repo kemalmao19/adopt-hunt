@@ -1,9 +1,19 @@
+"use client";
 import React from "react";
 import { Pencil } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { Eye } from "lucide-react";
 import {imageUrl} from "@/config/apiUrl";
 import Link from "next/link";
+
+const deletePet = async (id) => {
+    const res = await fetch(`/api/pets/${id}`, {
+        method: "DELETE",
+    });
+    const data = await res.json();
+    window.location.reload();
+    return data;
+}
 
 export const MyPets = ({pets}) => {
   return (
@@ -46,6 +56,7 @@ export const MyPets = ({pets}) => {
                 strokeWidth={3}
                 className="cursor-pointer hover:scale-110"
                 color="red"
+                onClick={() => deletePet(pet.id)}
               />
             </div>
             <Link href={`/dashboard/pets/${pet.id}`}><Eye

@@ -25,4 +25,14 @@ export async function PUT(request, { params }) {
     });
     return NextResponse.json({ pet }, { status: 201 });
 }
-  
+
+// delete pet information by id
+export async function DELETE(request, { params }) {
+    const { id } = params;
+    const pet = await prisma.pet.delete({
+        where: {
+            id,
+        },
+    });
+    return NextResponse.json({ pet }, { status: 200 });
+}
