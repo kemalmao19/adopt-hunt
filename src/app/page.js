@@ -1,6 +1,6 @@
 import { PetsAvailable } from "@/components/landing/PetsAvailable";
 import { Story } from "@/components/landing/Story";
-import { apiUrl, checkEnvironment } from "@/config/apiUrl";
+import { checkEnvironment } from "@/config/apiUrl";
 
 async function getPets() {
   const res = await fetch(`${checkEnvironment()}/api/pets`, {
@@ -27,7 +27,7 @@ export default async function Home() {
   return (
   <> 
   <PetsAvailable pets={pets} />
-  <Story stories={stories}/>
+  {/* <Story stories={stories}/> */}
   </>
   )
 }
