@@ -5,13 +5,17 @@ import { PetOwner } from "@/components/pets/components/PetOwner";
 import { checkEnvironment } from "@/config/apiUrl";
 
 async function getPet(id) {
-  const res = await fetch(`${checkEnvironment()}/api/pets/${id}`);
+  const res = await fetch(`${checkEnvironment()}/api/pets/${id}`, {
+    cache: "no-store",
+  });
   const data = await res.json();
   return data;
 }
 
 async function getPetOwner(id) {
-  const res = await fetch(`${checkEnvironment()}/api/users/${id}`);
+  const res = await fetch(`${checkEnvironment()}/api/users/${id}`, {
+    cache: "no-store",
+  });
   const data = await res.json();
   return data;
 }
@@ -22,7 +26,7 @@ export default async function Page({ params }) {
 
   const userId = pet.userId;
   const { user } = await getPetOwner(userId);
-    // console.log({pet})
+  // console.log({pet})
 
   return (
     <>
