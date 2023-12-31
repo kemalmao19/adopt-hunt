@@ -1,5 +1,6 @@
 import React from "react";
 import { imageUrl } from "@/config/apiUrl";
+import Link from "next/link";
 
 export const PetsAvailable = ({ pets }) => {
   const availablePets = pets.filter((pet) => pet.isAdopted === false);
@@ -15,16 +16,22 @@ export const PetsAvailable = ({ pets }) => {
 
           return (
             <div key={index} className="bg-white rounded-3xl border shadow-lg">
-              <img
-                src={image}
-                alt="pet"
-                className="w-full h-auto rounded-t-3xl"
-                width={300}
-                height={200}
-              />
+              <Link href={`/pets/${pet.id}`}>
+                <img
+                  src={image}
+                  alt="pet"
+                  className="w-full h-auto rounded-t-3xl"
+                  width={300}
+                  height={200}
+                />
+              </Link>
               <section className="p-7 gap-8 flex flex-col justify-between">
                 <div className="space-y-1">
-                  <h2 className="text-3xl">{pet.name}</h2>
+                  <h2 className="text-3xl">
+                    <Link href={`/pets/${pet.id}`}>
+                      {pet.name}
+                    </Link>
+                  </h2>
                   <p className="text-gray-500 thin-text">{pet.description}</p>
                 </div>
                 <p className="text-gray-500 thin-text">

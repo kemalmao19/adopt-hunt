@@ -40,4 +40,8 @@
   body > div[data-overlay-container="true"] {
     @apply h-full;
   }
+
+  .pet-images img{
+    @apply object-cover w-full h-full;
+  }
 }
