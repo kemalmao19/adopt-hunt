@@ -37,11 +37,11 @@ export const MyPets = ({pets}) => {
           </section>
           <section className="flex justify-between items-center px-7 py-4 border-t-2 border-gray-200">
             <div className="flex space-x-4">
-              <Pencil
+              <Link href={`/dashboard/pets/update/${pet.id}`}><Pencil
                 strokeWidth={3}
                 className="cursor-pointer hover:scale-110"
                 color="green"
-              />
+              /></Link>
               <Trash2
                 strokeWidth={3}
                 className="cursor-pointer hover:scale-110"
