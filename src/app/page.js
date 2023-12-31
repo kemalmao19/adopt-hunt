@@ -11,9 +11,9 @@ async function getPets() {
 
 async function getStories() {
   const res = await fetch(`${checkEnvironment()}/api/story`);
-  const { stories } = await res.json();
-  // console.log(stories);
-  return stories;
+  const {story} = await res.json();
+  // console.log(story);
+  return story;
 }
 
 export default async function Home() {
