@@ -23,11 +23,12 @@ async function getStories() {
 export default async function Home() {
   const pets = await getPets();
   const stories = await getStories();
+  console.log(stories);
 
   return (
   <> 
   <PetsAvailable pets={pets} />
-  {/* <Story stories={stories}/> */}
+  <Story stories={stories}/>
   </>
   )
 }

@@ -4,7 +4,7 @@ import { checkEnvironment } from "@/config/apiUrl";
 const getAdopterName = async (x) => {
   const res = await fetch(`${checkEnvironment()}/api/adopter/${x}`);
   const adopter = await res.json();
-  
+
   return adopter;
 };
 
@@ -17,6 +17,7 @@ export const Story = ({ stories }) => {
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 my-20">
         {stories.map(async(story, index) => {
           const adopterName = await getAdopterName(story.adopterId);
+          console.log(adopterName);
           return (
             <div key={index}>
               <section className="text-gray-500">{`"${story.content}"`}</section>
