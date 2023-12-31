@@ -20,8 +20,8 @@ export const Story = ({ stories }) => {
           return (
             <div key={index}>
               <section className="text-gray-500">{`"${story.content}"`}</section>
-              <section>{story.rating}</section>
-              <section>{adopterName.adopter.name}</section>
+              <section className="text-gray-500">{story.rating}</section>
+              <section className="text-gray-500">{adopterName.adopter.name}</section>
             </div>
           );
         })}
