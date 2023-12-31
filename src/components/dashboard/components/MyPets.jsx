@@ -3,6 +3,7 @@ import { Pencil } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { Eye } from "lucide-react";
 import {imageUrl} from "@/config/apiUrl";
+import Link from "next/link";
 
 export const MyPets = ({pets}) => {
   return (
@@ -47,10 +48,10 @@ export const MyPets = ({pets}) => {
                 color="red"
               />
             </div>
-            <Eye
+            <Link href={`/dashboard/pets/${pet.id}`}><Eye
               strokeWidth={3}
               className="cursor-pointer hover:scale-110"
-            />
+            /></Link>
           </section>
         </div>
       );
