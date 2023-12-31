@@ -9,11 +9,10 @@ export const useLogout = () => {
     Cookies.remove("token"); //remove token cookie
     Cookies.remove("id"); //remove user id cookie
     Cookies.remove("isLogin"); //remove isLogin cookie
-    Cookies.remove("username"); //remove isLogin cookie
-    localStorage.removeItem("userData");
+    localStorage.removeItem("userData"); //remove user data
 
-    setTimeout(() => router.push("/login"), 1000);
     router.refresh();
+    router.push("/login");
   };
 
   return {

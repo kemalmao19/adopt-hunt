@@ -27,10 +27,9 @@ export const Login = () => {
     // console.log(data); //cek data user
 
     Cookies.set("id", data.id); //store value user-id di cookies browser
-    Cookies.set("username", data.username); //store username
     Cookies.set("isLogin", true); //untuk kebutuhan dinamic header menu
 
-    localStorage.setItem("userData", JSON.stringify(data));
+    localStorage.setItem("userData", JSON.stringify(data)); // store data user ke localstorage
 
     if (errorMessage) {
       toast.error(errorMessage);
