@@ -1,3 +1,4 @@
+import { AdoptionProcess } from "@/components/pets/components/AdoptionProcess";
 import { PetAbout } from "@/components/pets/components/PetAbout";
 import { PetInfo } from "@/components/pets/components/PetInfo";
 import { PetOwner } from "@/components/pets/components/PetOwner";
@@ -21,7 +22,7 @@ export default async function Page({ params }) {
 
   const userId = pet.userId;
   const { user } = await getPetOwner(userId);
-  //   console.log({user})
+    // console.log({pet})
 
   return (
     <>
@@ -32,8 +33,9 @@ export default async function Page({ params }) {
           <PetAbout pet={pet} />
         </div>
         {/* RIGHT */}
-        <div>
+        <div className="space-y-6">
           <PetOwner user={user} />
+          <AdoptionProcess />
         </div>
       </div>
     </>
