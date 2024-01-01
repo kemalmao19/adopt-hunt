@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/utils/prisma";
 
 export async function POST(req) {
-  const { name, email, phone, address, userId } = await req.json();
+  const { name, email, phone, address, isAdopter, userId, petId } = await req.json();
 
   try {
     // Create adopter to database
@@ -12,7 +12,9 @@ export async function POST(req) {
         email,
         phone,
         address,
+        isAdopter: Boolean(isAdopter),
         userId,
+        petId,
       },
     });
 

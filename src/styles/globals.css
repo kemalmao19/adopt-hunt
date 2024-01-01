@@ -22,6 +22,11 @@
     @apply text-3xl lg:text-4xl;
   }
 
+  h3 {
+    font-family: var(--font-jua);
+    @apply text-xl lg:text-2xl;
+  }
+
   a:not([role="button"]) {
     @apply hover:text-oren transition-all;
   }
@@ -39,5 +44,9 @@
   /* Not sure from where these div come */
   body > div[data-overlay-container="true"] {
     @apply h-full;
+  }
+
+  .pet-images img{
+    @apply object-cover w-full h-full;
   }
 }
