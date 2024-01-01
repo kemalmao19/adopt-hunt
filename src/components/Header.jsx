@@ -30,7 +30,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-5 z-[999] mx-4 lg:mx-auto max-w-5xl shadow-sm py-3 px-6 rounded-xl bg-white/50 backdrop-blur-3xl border-[3px] border-white">
-      <div className="flex justify-center md:justify-between items-center flex-wrap gap-5">
+      <div className="flex justify-between items-center flex-wrap gap-5">
         <div className="flex items-center gap-5">
           <Link href={"/"}>
             <Image
@@ -53,7 +53,7 @@ export const Header = () => {
           ) : null}
         </div>
         {login && isClient ? (
-          <div className="space-x-3">
+          <div className="space-x-3 ml-auto md:ml-0">
             <Link href={"/dashboard/pets"} color="foreground">
               My Pets
             </Link>
@@ -76,7 +76,7 @@ export const Header = () => {
             color="default"
             className="text-white bg-black "
           >
-            Pet Owner
+            Are you Pet Owner?
           </Button>
         )}
       </div>
