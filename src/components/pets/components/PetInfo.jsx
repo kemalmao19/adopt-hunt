@@ -8,8 +8,8 @@ export const PetInfo = ({ pet }) => {
 
   return (
     <>
-      <h1 className="mt-5 mb-10 capitalize">{pet.name}</h1>
-      <div className="pet-images grid grid-cols-4 gap-5 mb-10">
+      <h1 className="mb-10 capitalize">{pet.name}</h1>
+      <div className="pet-images grid grid-cols-3 gap-5 mb-10">
         {petImages.map((image, index) => {
           return (
             <Image

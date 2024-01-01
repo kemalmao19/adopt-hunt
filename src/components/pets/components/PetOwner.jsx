@@ -8,7 +8,7 @@ import { MapPin } from "lucide-react";
 
 export const PetOwner = ({ user }) => {
   return (
-    <div className="pet-owner p-5 rounded-2xl border">
+    <div className="pet-owner p-5 rounded-2xl border bg-white">
       <h3>Pet Owner info</h3>
       <Card className="max-w-[340px] shadow-none">
         <CardHeader className="justify-between pl-1 pr-0 pb-0">

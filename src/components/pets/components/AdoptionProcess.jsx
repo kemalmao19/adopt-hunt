@@ -108,7 +108,7 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
       </div>
 
       {/* POTENTIAL ADOPTER */}
-      <div className="p-5 rounded-2xl border text-center">
+      <div className="p-5 rounded-2xl border text-center bg-white">
         <h3 className="text-center mb-2">
           Potential Adopter
         </h3>
