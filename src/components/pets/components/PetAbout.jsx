@@ -9,7 +9,7 @@ export const PetAbout = ({pet}) => {
         <span>{pet.age} y.o.</span>
         <span>{pet.gender}</span>
       </div>
-      <p className="mt-5 mb-10 capitalize">{pet.description}</p>
+      <p className="mt-5 mb-10 text-gray-500">{pet.description}</p>
       <div className="text-sm">
         <p>
           <span className="font-jua">Breed (type):</span>{" "}
