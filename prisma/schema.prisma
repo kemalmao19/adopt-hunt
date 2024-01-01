@@ -49,8 +49,8 @@ model Pet {
 model Adopter {
   id        String   @id @default(uuid())
   name      String
-  email     String   @unique
-  phone     String   @unique
+  email     String   
+  phone     String   
   address   String
   isAdopter Boolean? @default(false)
   reviews   Review[]
