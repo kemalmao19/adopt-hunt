@@ -8,11 +8,13 @@ import {
   ModalHeader,
   ModalBody,
   useDisclosure,
+  Chip,
 } from "@nextui-org/react";
 import { useState } from "react";
 import { apiUrl, checkEnvironment } from "@/config/apiUrl";
 import toast from "react-hot-toast";
 import { PetOwnerContact } from "./PetOwnerContact";
+import { UserRoundCheck } from "lucide-react";
 
 export const AdoptionProcess = ({ pet, user, adopters }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -39,8 +41,7 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
 
   const isFormComplete = () => {
     // Check if all input values are filled
-    return Object.values(submitAdopter).every(value => value.trim() !== '');
-    
+    return Object.values(submitAdopter).every((value) => value.trim() !== "");
   };
 
   async function handleSubmitAdopter() {
@@ -86,12 +87,13 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
   return (
     <div className="space-y-6">
       {/* PET OWNER CONTACT */}
-      {isSubmit ? <PetOwnerContact user={user} />  : null}
+      {isSubmit ? <PetOwnerContact user={user} /> : null}
 
       {/* PET STATUS */}
       <div className="p-5 rounded-2xl border-oren border-2 text-center bg-oren-light">
         <h3 className="text-center">
-          Considering <span className="text-ungu capitalize">{pet.name}</span> for adoption?
+          Considering <span className="text-ungu capitalize">{pet.name}</span>{" "}
+          for adoption?
         </h3>
         <Button
           onPress={onOpen}
@@ -106,9 +108,16 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
       {/* POTENTIAL ADOPTER */}
       <div className="p-5 rounded-2xl border text-center">
         <h3 className="text-center">Potential Adopter</h3>
-        {potentialAdopter.map(({id, name}) => {
-          return (<span key={id}>{name}, </span>)
-        })}
+        <div className="space-x-2 space-y-2">
+          {potentialAdopter.map(({ id, name }) => {
+            return (
+              <Chip key={id} color="warning" variant="flat"
+              startContent={<UserRoundCheck size={18} />}>
+                {name}
+              </Chip>
+            );
+          })}
+        </div>
       </div>
 
       {/* ADOPTER FORM */}
@@ -123,7 +132,9 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
                   <ModalHeader className="flex flex-col gap-1">
                     <h3 className="text-center">Please fill this form</h3>
                     <p className="text-center text-sm">
-                      You can get the contact number of the pet owner after
+                      You can get the{" "}
+                      <span className="text-oren">contact number</span> of the
+                      pet owner <span className="text-oren">after </span>
                       submiting this form.
                     </p>
                   </ModalHeader>
