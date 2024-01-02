@@ -1,13 +1,7 @@
-import { UserProfile } from "@/components/dashboard/components/UserProfile";
+import { CreatePet } from "@/components/dashboard/components/CreatePet";
+import { PetsAvailable } from "@/components/landing/PetsAvailable";
 import React from "react";
 
-export default function Page() {
-  return (
-    <>
-      <h2 className="mb-5">User Profile</h2>
-      <section className="mt-10">
-        <UserProfile />
-      </section>
-    </>
-  );
+export default async function Page() {
+  return <div>Ini dashboard</div>;
 }

@@ -1,56 +1,88 @@
 "use client";
 
-import { Button, Input, Divider, Textarea } from "@nextui-org/react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { apiUrl } from "@/config/apiUrl";
+import { Button, Input } from "@nextui-org/react";
+import { useRouter } from "next/navigation"; //+
+import { useState } from "react"; //+
+import toast from "react-hot-toast"; //+
 
-async function getData() {
-  const res = await fetch(`${apiUrl}/users`);
-  const users = await res.json();
-  return users;
-}
+export const UserProfile = ({
+  id,
+  username,
+  email,
+  contact,
+  domicile,
+  bio,
+}) => {
+  const router = useRouter(); //+
+  const [loading, setLoading] = useState(false); //+
 
-export default async function Profile() {
-  const { users } = await getData();
+  async function updateUserData(event) {
+    setLoading(true); //+
+    event.preventDefault();
+    const formData = new FormData(event.target);
 
-  console.log(users);
-}
+    const email = formData.get("email");
+    const contactNumber = formData.get("contactNumber");
+    const domicile = formData.get("domicile");
+    const bio = formData.get("bio");
 
-export const UserProfile = () => {
+    const res = await fetch(`/api/users/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ email, contact: contactNumber, domicile, bio }),
+    });
+    const data = await res.json();
+    console.log(data);
+
+    if (res.status === 200) {
+      //+
+      setLoading(false);
+      toast.success("Edit profile successfully 👍");
+      setTimeout(() => router.push("/dashboard"), 1000);
+    }
+  }
+
   return (
     <>
       <h1 className="space-y-3 pt-20">
-        Hi, <span>username!</span>
+        Hi, <span>{username}!</span>
       </h1>
-      <h3 className="text-xl font-jua mb-6">Welcome to your dashboard</h3>
-      <form className="space-y-4">
+      <h3 className="text-xl font-jua">Welcome to your dashboard</h3>
+      <form className="space-y-4" onSubmit={updateUserData}>
         <label className="flex justify-start gap-5 items-center">
           E-mail:
-          <Input name="email" type="email" className="w-80 " />
+          <Input
+            name="email"
+            type="email"
+            className="w-80"
+            defaultValue={email}
+          />
         </label>
 
         <label className="flex justify-start gap-5 items-center">
           Contact number:
-          <Input name="contactNumber" className="w-80 " />
+          <Input name="contactNumber" className="w-80" defaultValue={contact} />
         </label>
+
         <label className="flex justify-start gap-5 items-center">
           Domicile:
-          <Input name="domicile" className="w-80 " />
+          <Input name="domicile" className="w-80" defaultValue={domicile} />
         </label>
+
         <label className="flex justify-start gap-5 items-center">
           Bio:
-          <Input name="bio" className="w-80 " />
+          <Input name="bio" className="w-80" defaultValue={bio} />
         </label>
+
         <Button
+          isLoading={loading} //+
+          isDisabled={loading} //+
           type="submit"
           color="danger"
           radius="full"
           size="lg"
           className="bg-black w-40"
         >
-          Edit
+          Update
         </Button>
       </form>
     </>
