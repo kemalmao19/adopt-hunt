@@ -8,8 +8,9 @@ async function getPets() {
   const cookieStore = cookies();
   const userId = cookieStore.get("id").value;
 
-  console.log(typeof userId);
-  const res = await fetch(`${checkEnvironment()}/api/pets?userId=${userId}`);
+  const res = await fetch(`${checkEnvironment()}/api/pets?userId=${userId}`, {
+    cache: "no-store",
+  });
   const { pets } = await res.json();
   return pets;
 }
