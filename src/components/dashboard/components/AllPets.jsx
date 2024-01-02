@@ -5,16 +5,23 @@ import Link from "next/link";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { Search } from "lucide-react";
 import { checkEnvironment } from "@/config/apiUrl";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const getUser = async (x) => {
   const res = await fetch(`${checkEnvironment()}/api/users/${x}`);
-  const adopter = await res.json();
+  const user = await res.json();
 
-  return adopter;
+  return user;
 };
 
 export const AllPets = ({ pets }) => {
+  const router = useRouter();
+  const handleSearch = (e) => {
+    const domicile = e.target.domicile.value;
+    const category = e.target.category.value;
+
+    router.push(`/allpets?domicile=${domicile}&category=${category}`);
+  };
 
   return (
     <>
@@ -24,15 +31,18 @@ export const AllPets = ({ pets }) => {
         </h2>
         <div className="flex gap-4 items-center">
           <h2>Search</h2>
-          <form className="flex gap-2 w-full items-center">
-            <Select name="category" label="Cat">
+          <form
+            className="flex gap-2 w-full items-center"
+            onSubmit={handleSearch}
+          >
+            <Select name="category" label="Category">
               <SelectItem key="cat">Cat</SelectItem>
               <SelectItem key="dog">Dog</SelectItem>
             </Select>
-            <Input name="domicile" type="text" placeholder="Jakarta"/>
-            <Button type="submit" auto>
-              <Search />
-            </Button>
+            <Input name="domicile" type="text" placeholder="Location" />
+            <Button type="submit">
+            <Search />
+          </Button>
           </form>
         </div>
       </section>
