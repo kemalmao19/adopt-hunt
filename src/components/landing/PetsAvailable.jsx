@@ -2,7 +2,7 @@ import React from "react";
 import { imageUrl } from "@/config/apiUrl";
 import Link from "next/link";
 
-export const PetsAvailable = ({ pets }) => {
+export const PetsAvailable = ({ pets, adopters }) => {
   const availablePets = pets.filter((pet) => pet.isAdopted === false);
   return (
     <>
@@ -13,6 +13,13 @@ export const PetsAvailable = ({ pets }) => {
         {availablePets.map((pet, index) => {
           let imageSize = "tr:w-300,h-200";
           let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
+
+          const petId = pet.id;
+
+          const filterDataByPetId = (adopters) => {
+            return adopters.filter((item) => item.petId === petId);
+          };
+          const potentialAdopter = filterDataByPetId(adopters);
 
           return (
             <div key={index} className="bg-white rounded-3xl border shadow-lg">
@@ -28,14 +35,12 @@ export const PetsAvailable = ({ pets }) => {
               <section className="p-7 gap-8 flex flex-col justify-between">
                 <div className="space-y-1">
                   <h2 className="text-3xl">
-                    <Link href={`/pets/${pet.id}`}>
-                      {pet.name}
-                    </Link>
+                    <Link href={`/pets/${pet.id}`}>{pet.name}</Link>
                   </h2>
                   <p className="text-gray-500 thin-text">{pet.description}</p>
                 </div>
                 <p className="text-gray-500 thin-text">
-                  Potential Adopter:{" "}
+                  Potential Adopter:{` ${potentialAdopter.length}`}
                   <span className="font-bold">{pet.potentialAdopter}</span>
                 </p>
               </section>
