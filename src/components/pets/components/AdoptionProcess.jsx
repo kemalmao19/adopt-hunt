@@ -9,16 +9,25 @@ import {
   ModalBody,
   useDisclosure,
   Chip,
+  Textarea,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { apiUrl, checkEnvironment } from "@/config/apiUrl";
 import toast from "react-hot-toast";
 import { PetOwnerContact } from "./PetOwnerContact";
 import { UserRoundCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export const AdoptionProcess = ({ pet, user, adopters }) => {
+export const AdoptionProcess = ({
+  pet,
+  user,
+  potentialAdopter,
+  adopter,
+  storyAdopter,
+}) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [submitAdopter, setSubmitAdopter] = useState({
@@ -27,14 +36,42 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
     phone: "",
     address: "",
   });
+  const [submitStory, setSubmitStory] = useState({
+    content: "",
+  });
 
   const petId = pet.id;
   const userId = pet.userId;
+
+  const potentialAdopterLenght = potentialAdopter.length;
+  const isPotentialAdopter = potentialAdopterLenght > 0;
+  const isAdopted = pet.isAdopted === true;
+  const isStory = storyAdopter.length > 0;
+
+  const adopterId = adopter[0]?.id;
+  const adopterName = adopter[0]?.name;
+  const adopterEmail = adopter[0]?.email;
+
+  const [submittedEmail, setSubmittedEmail] = useState("");
+  const [storedEmail, setStoredEmail] = useState(adopterEmail);
+  const [isEmailMatched, setIsEmailMatched] = useState(null);
+
+  const handleEmailChange = (event) => {
+    setSubmittedEmail(event.target.value);
+  };
 
   const handleAdopterChange = (e) => {
     const { name, value } = e.target;
     setSubmitAdopter({
       ...submitAdopter,
+      [name]: value,
+    });
+  };
+
+  const handleStoryChange = (e) => {
+    const { name, value } = e.target;
+    setSubmitStory({
+      ...submitStory,
       [name]: value,
     });
   };
@@ -75,16 +112,48 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
     setIsSubmit(true);
   }
 
-  // filter adopters by the same petId
-  const filterDataByPetId = (adopters) => {
-    return adopters.filter((item) => item.petId === pet.id);
-  };
+  async function handleSubmitStory() {
+    setLoading(true);
+    const { content } = submitStory;
 
-  const potentialAdopter = filterDataByPetId(adopters);
-  const potentialAdopterLenght = potentialAdopter.length;
-  const isPotentialAdopter = potentialAdopterLenght > 0;
+    const res = await fetch(`${checkEnvironment()}/api/story`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content,
+        adopterId: adopterId,
+        petId: petId,
+      }),
+    });
+    const data = await res.json();
 
-  // console.log(potentialAdopter)
+    if (!data) {
+      setLoading(false);
+      toast.error("Error -..-");
+      return;
+    }
+
+    setLoading(false);
+    toast.success("Story submit successfully!");
+    setTimeout(() => router.refresh(), 1000);
+  }
+
+  useEffect(() => {
+    const checkEmailMatch = () => {
+      // Compare the submitted email with the stored email
+      const match = submittedEmail === storedEmail;
+      setIsEmailMatched(match);
+    };
+
+    if (submittedEmail) {
+      checkEmailMatch();
+    } else {
+      // Reset the state if submittedEmail is empty
+      setIsEmailMatched(null);
+    }
+  }, [submittedEmail, storedEmail]);
 
   return (
     <div className="space-y-6">
@@ -93,44 +162,117 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
 
       {/* PET STATUS */}
       <div className="p-5 rounded-2xl border-oren border-2 text-center bg-oren-light">
-        <h3 className="text-center">
-          Considering <span className="text-ungu capitalize">{pet.name}</span>{" "}
-          for adoption?
-        </h3>
-        <Button
-          onPress={onOpen}
-          color="danger"
-          radius="full"
-          className="bg-black mt-4"
-        >
-          Yes!
-        </Button>
-      </div>
-
-      {/* POTENTIAL ADOPTER */}
-      <div className="p-5 rounded-2xl border text-center bg-white">
-        <h3 className="text-center mb-2">
-          Potential Adopter
-        </h3>
-        {isPotentialAdopter ? (
-          <div className="space-x-2 space-y-2">
-            {potentialAdopter.map(({ id, name }) => {
-              return (
-                <Chip
-                  key={id}
-                  color="warning"
-                  variant="flat"
-                  startContent={<UserRoundCheck size={18} />}
-                >
-                  {name}
-                </Chip>
-              );
-            })}
-          </div>
+        {isAdopted ? (
+          <h3>
+            <span className="text-red-500">Adopted</span> by{" "}
+            <span className="capitalize">{adopterName}</span>
+          </h3>
         ) : (
-          (<span className="text-sm text-gray-400">Currently no one has been interested in {pet.name} 🙁</span>)
+          <>
+            <h3 className="text-center">
+              Considering{" "}
+              <span className="text-ungu capitalize">{pet.name}</span> for
+              adoption?
+            </h3>
+            <Button
+              onPress={onOpen}
+              color="danger"
+              radius="full"
+              className="bg-black mt-4"
+            >
+              Yes!
+            </Button>
+          </>
         )}
       </div>
+
+      {/* STORY-CHECK EMAIL, STORY FORM */}
+      {!isStory ? (
+        <>
+          {" "}
+          {isAdopted ? (
+            <div className="p-5 rounded-2xl border bg-white mt-5">
+              <h3>Are you the Adopter?</h3>
+              <p className="mb-3 text-gray-500 text-sm">
+                You can share your story about your new pet.
+              </p>
+              <p className="mb-4 font-jua">First, please Type your email.</p>
+              <div className="space-y-3">
+                <Input
+                  name="email"
+                  label="Your email"
+                  variant="bordered"
+                  type="email"
+                  value={submittedEmail}
+                  onChange={handleEmailChange}
+                />
+                {isEmailMatched !== null && (
+                  <div>
+                    {isEmailMatched ? (
+                      <>
+                        <p className="mb-4 font-jua">
+                          <span className="text-green-500">Email matched!</span>{" "}
+                          Please submit your story
+                        </p>
+                        <form className="space-y-3">
+                          <Textarea
+                            name="content"
+                            label="Your story"
+                            variant="bordered"
+                            onChange={handleStoryChange}
+                          ></Textarea>
+                          <Button
+                            isLoading={loading}
+                            isDisabled={loading}
+                            onClick={handleSubmitStory}
+                            color="danger"
+                            radius="full"
+                            size="lg"
+                            className="bg-black w-full disabled:cursor-not-allowed"
+                          >
+                            Submit
+                          </Button>
+                        </form>
+                      </>
+                    ) : (
+                      <span className="text-red-500 font-jua">
+                        Email does not match
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : null}
+        </>
+      ) : null}
+
+      {/* POTENTIAL ADOPTER */}
+      {!isAdopted ? (
+        <div className="p-5 rounded-2xl border text-center bg-white">
+          <h3 className="text-center mb-2">Potential Adopter</h3>
+          {isPotentialAdopter ? (
+            <div className="space-x-2 space-y-2">
+              {potentialAdopter.map(({ id, name }) => {
+                return (
+                  <Chip
+                    key={id}
+                    color="warning"
+                    variant="flat"
+                    startContent={<UserRoundCheck size={18} />}
+                  >
+                    {name}
+                  </Chip>
+                );
+              })}
+            </div>
+          ) : (
+            <span className="text-sm text-gray-400">
+              Currently no one has been interested in {pet.name} 🙁
+            </span>
+          )}
+        </div>
+      ) : null}
 
       {/* ADOPTER FORM */}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
