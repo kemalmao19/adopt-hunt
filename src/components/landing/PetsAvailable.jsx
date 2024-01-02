@@ -11,6 +11,13 @@ async function getAdopter() {
   return data;
 }
 
+const getUser = async (x) => {
+  const res = await fetch(`${checkEnvironment()}/api/users/${x}`);
+  const user = await res.json();
+
+  return user;
+};
+
 export const PetsAvailable = async({ pets}) => {
   const availablePets = pets.filter((pet) => pet.isAdopted === false);
   const {adopters} = await getAdopter();
@@ -20,10 +27,10 @@ export const PetsAvailable = async({ pets}) => {
         <span className="text-ungu">Pets</span> Available
       </h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 my-20">
-        {availablePets.map((pet, index) => {
+        {availablePets.map(async(pet, index) => {
           let imageSize = "tr:w-300,h-200";
           let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
-
+          const userLocation = await getUser(pet.userId);
           const petId = pet.id;
 
           const filterDataByPetId = (adopters) => {
@@ -49,6 +56,7 @@ export const PetsAvailable = async({ pets}) => {
                     <Link href={`/pets/${pet.id}`}>{pet.name}</Link>
                   </h2>
                   <p className="text-gray-500 thin-text">{pet.description}</p>
+                  <p>{userLocation.user["domicile"]}</p>
                 </div>
                 <p className="text-gray-500 thin-text">
                   Potential Adopter:{` ${potentialAdopter.length}`}
