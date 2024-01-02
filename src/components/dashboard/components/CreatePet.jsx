@@ -45,7 +45,7 @@ export const CreatePet = () => {
     if (res.status === 201) {
       setLoading(false);
       toast.success("Add Pet successfully 👍");
-      setTimeout(() => router.push("/dashboard"), 1000); // TODO: CHANGE TO MY PETS PAGE
+      setTimeout(() => router.push("/dashboard/pets"), 1000);
     }
   }
 

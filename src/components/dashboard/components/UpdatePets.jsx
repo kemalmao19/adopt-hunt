@@ -61,7 +61,7 @@ export const UpdatePet = ({ pet }) => {
       >
         <div className="grid grid-cols-2 gap-4">
           <Input name="name" label="Name" defaultValue={petData.name} />
-          <Select name="category" label="Select a category" >
+          <Select name="category" defaultSelectedKeys={[petData.category]} label="Select a category" >
             <SelectItem key="cat">Cat</SelectItem>
             <SelectItem key="dog">Dog</SelectItem>
           </Select>
@@ -70,7 +70,7 @@ export const UpdatePet = ({ pet }) => {
             label="Breed (type)"
             defaultValue={petData.breed}
           />
-          <Select name="gender" label="Select gender">
+          <Select name="gender" defaultSelectedKeys={[petData.gender]} label="Select gender">
             <SelectItem key="male">Male</SelectItem>
             <SelectItem key="female">Female</SelectItem>
           </Select>
