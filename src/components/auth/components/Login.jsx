@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 export const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,13 @@ export const Login = () => {
       method: "POST",
       body: JSON.stringify({ username, password }),
     });
-    const { message, errorMessage } = await res.json();
+    const { data, message, errorMessage } = await res.json();
+    // console.log(data); //cek data user
+
+    Cookies.set("id", data.id); //store value user-id di cookies browser
+    Cookies.set("isLogin", true); //untuk kebutuhan dinamic header menu
+
+    localStorage.setItem("userData", JSON.stringify(data)); // store data user ke localstorage
 
     if (errorMessage) {
       toast.error(errorMessage);
@@ -31,6 +38,7 @@ export const Login = () => {
     }
 
     toast.success(message);
+    router.refresh(); // wajib di refresh
     setLoading(false);
     setTimeout(() => router.push("/dashboard"), 1000);
   }

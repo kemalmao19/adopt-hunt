@@ -43,7 +43,7 @@ export async function POST(req) {
     // Buat token
     const token = sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
     const res = NextResponse.json({ data: payload, message: "Login succesfully, redirecting... 🚀" }, { status: 200 });
-    res.cookies.set("token", token);
+    res.cookies.set("token", token); // store data token ke browser
 
     return res;
   } catch (error) {

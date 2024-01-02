@@ -9,12 +9,7 @@ export const DefaultLayout = ({ children }) => {
   const currentPath = usePathname();
   const landingPage = currentPath === "/";
 
-  if (
-    currentPath === "/login" ||
-    currentPath === "/register" ||
-    currentPath === "/userProfile" ||
-    currentPath.startsWith("/dashboard")
-  ) {
+  if (currentPath === "/login" || currentPath === "/register") {
     return <>{children}</>;
   }
 

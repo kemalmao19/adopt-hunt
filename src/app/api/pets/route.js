@@ -1,6 +1,6 @@
 import prisma from "@/utils/prisma";
 import { NextResponse } from "next/server";
-import {verify} from "jsonwebtoken";
+import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import slugify from "slugify";
 import { uploadFile } from "@/lib/uploadFile";
@@ -9,13 +9,15 @@ export async function GET(request) {
   try {
     const queryParams = request.nextUrl.searchParams;
     const query = queryParams.get("q");
+    const userId = queryParams.get("userId");
     const domicile = queryParams.get("domicile");
     const category = queryParams.get("category");
 
     let pets = null;
 
-    if (!(domicile || category || query)) {
+    if (!(domicile || category || query || userId)) {
       pets = await prisma.pet.findMany();
+      return NextResponse.json({ pets }, { status: 200 });
     }
 
     if (domicile && !category) {
@@ -69,9 +71,7 @@ export async function GET(request) {
         },
       });
 
-      const allPets = usersWithDomicileAndPetsInCategory.flatMap(
-        (user) => user.pets
-      );
+      const allPets = usersWithDomicileAndPetsInCategory.flatMap((user) => user.pets);
       return NextResponse.json({ pets: allPets }, { status: 200 });
     } else if (query) {
       pets = await prisma.pet.findMany({
@@ -98,13 +98,18 @@ export async function GET(request) {
       } else {
         return NextResponse.json({ pets: [] }, { status: 200 });
       }
+    } else if (userId) {
+      pets = await prisma.pet.findMany({
+        where: {
+          userId,
+        },
+      });
+
+      return NextResponse.json({ pets }, { status: 200 });
     }
   } catch (error) {
     console.error("Error in GET request:", error);
-    return NextResponse.json(
-      { message: "Failed to process the request." },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Failed to process the request." }, { status: 500 });
   }
 }
 
@@ -133,7 +138,9 @@ export async function POST(request) {
   // save pet to database
   try {
     const allImages = [];
-    images.forEach((x) => { allImages.push(x.name) });
+    images.forEach((x) => {
+      allImages.push(x.name);
+    });
 
     const addPet = await prisma.pet.create({
       data: {
@@ -158,7 +165,7 @@ export async function POST(request) {
   }
   // Send Image ke AWS S3
   try {
-     // Upload images file
+    // Upload images file
     images.forEach(async (item) => {
       const uploadFeaturedImage = await uploadFile({
         Body: item,
