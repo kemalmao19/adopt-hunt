@@ -80,7 +80,7 @@ export default async function Page({ params }) {
         <div className="space-y-6">
           <PetOwner user={user} />
           <AdoptionProcess pet={pet} user={user} potentialAdopter={potentialAdopter} adopter={adopter} storyAdopter={storyAdopter} />
-          <AdopterStory storyAdopter={storyAdopter}/>
+          <AdopterStory storyAdopter={storyAdopter} adopter={adopter}/>
         </div>
       </div>
     </>
