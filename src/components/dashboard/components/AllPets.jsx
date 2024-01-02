@@ -67,7 +67,6 @@ export const AllPets = async({ pets }) => {
             return adopters.filter((item) => item.petId === petId);
           };
           const potentialAdopter = filterDataByPetId(adopters);
-          console.log(potentialAdopter)
 
           return (
             <Link key={index} href={`/pets/${pet.id}`}>
