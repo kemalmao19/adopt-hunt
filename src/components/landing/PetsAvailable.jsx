@@ -1,9 +1,19 @@
 import React from "react";
 import { imageUrl } from "@/config/apiUrl";
 import Link from "next/link";
+import { checkEnvironment } from "@/config/apiUrl";
 
-export const PetsAvailable = ({ pets, adopters }) => {
+async function getAdopter() {
+  const res = await fetch(`${checkEnvironment()}/api/adopter`, {
+    cache: "no-store",
+  });
+  const data = await res.json();
+  return data;
+}
+
+export const PetsAvailable = async({ pets}) => {
   const availablePets = pets.filter((pet) => pet.isAdopted === false);
+  const {adopters} = await getAdopter();
   return (
     <>
       <h2 id="pets" className="my-5">
@@ -20,9 +30,10 @@ export const PetsAvailable = ({ pets, adopters }) => {
             return adopters.filter((item) => item.petId === petId);
           };
           const potentialAdopter = filterDataByPetId(adopters);
+          console.log(potentialAdopter);
 
           return (
-            <div key={index} className="bg-white rounded-3xl border shadow-lg">
+            <div key={index} className="bg-white rounded-3xl border shadow-lg hover:scale-105 transition-all ease-in duration-100 cursor-pointer">
               <Link href={`/pets/${pet.id}`}>
                 <img
                   src={image}
