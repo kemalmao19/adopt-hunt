@@ -1,13 +1,13 @@
 import { UserProfile } from "@/components/dashboard/components/UserProfile";
 import { cookies } from "next/headers";
 import { verify } from "jsonwebtoken";
-import { apiUrl } from "@/config/apiUrl";
+import { checkEnvironment } from "@/config/apiUrl";
 import React from "react";
 
 async function getUserData() {
   const token = cookies().get("token").value;
   const { id } = verify(token, process.env.JWT_SECRET);
-  const res = await fetch(`${apiUrl}/users/${id}`, {
+  const res = await fetch(`${checkEnvironment()}/api/users/${id}`, {
     cache: "no-store",
   });
   const data = await res.json();
