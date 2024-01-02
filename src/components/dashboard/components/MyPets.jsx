@@ -40,7 +40,7 @@ export const MyPets = async({ pets }) => {
         const potentialAdopter = filterDataByPetId(adopters);
 
         return (
-          <div key={index} className="bg-white rounded-3xl border shadow-lg">
+          <div key={index} className="bg-white rounded-3xl border shadow-lg hover:scale-105 transition-all ease-in duration-100 cursor-pointer">
             <img
               src={image}
               alt="pet"

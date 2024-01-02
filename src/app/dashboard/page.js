@@ -10,20 +10,11 @@ async function getPets() {
   return pets;
 }
 
-async function getAdopter() {
-  const res = await fetch(`${checkEnvironment()}/api/adopter/`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-}
-
 export default async function Page() {
   const pets = await getPets();
-  const { adopters } = await getAdopter();
   return (
     <div>
-      <PetsAvailable pets={pets} adopters={adopters} />
+      <PetsAvailable pets={pets} />
     </div>
   );
 }
