@@ -31,17 +31,16 @@ async function getAdopter() {
 export default async function Page({ params }) {
   const { id } = params;
   const { pet } = await getPet(id);
+  const { adopters } = await getAdopter();
 
   const userId = pet.userId;
   const { user } = await getPetOwner(userId);
-  const { adopters } = await getAdopter();
-
 
   // console.log({pet})
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 mt-5">
         {/* LEFT */}
         <div className="md:col-span-1 lg:col-span-2">
           <PetInfo pet={pet} />

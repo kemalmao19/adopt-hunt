@@ -2,7 +2,7 @@ import React from "react";
 
 export const PetAbout = ({pet}) => {
   return (
-    <div className="p-5 rounded-2xl shadow-md">
+    <div className="pt-6 border-t-2 border-oren-light">
       <h2 className="mb-2">About pet</h2>
       <div className="space-x-5 text-gray-400 text-sm font-jua">
         <span>{pet.category}</span>

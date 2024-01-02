@@ -9,8 +9,9 @@ import {
   ModalBody,
   useDisclosure,
   Chip,
+  Textarea,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { apiUrl, checkEnvironment } from "@/config/apiUrl";
 import toast from "react-hot-toast";
 import { PetOwnerContact } from "./PetOwnerContact";
@@ -80,11 +81,18 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
     return adopters.filter((item) => item.petId === pet.id);
   };
 
+   // filter adopter
+   const filterAdopter = (potentialAdopter) => {
+    return potentialAdopter.filter((item) => item.isAdopter === true);
+  };
+
   const potentialAdopter = filterDataByPetId(adopters);
   const potentialAdopterLenght = potentialAdopter.length;
   const isPotentialAdopter = potentialAdopterLenght > 0;
+  const isAdopted = pet.isAdopted === true;
+  const adopter = filterAdopter(potentialAdopter);
 
-  // console.log(potentialAdopter)
+  const adopterName = adopter[0]?.name;
 
   return (
     <div className="space-y-6">
@@ -93,44 +101,56 @@ export const AdoptionProcess = ({ pet, user, adopters }) => {
 
       {/* PET STATUS */}
       <div className="p-5 rounded-2xl border-oren border-2 text-center bg-oren-light">
-        <h3 className="text-center">
-          Considering <span className="text-ungu capitalize">{pet.name}</span>{" "}
-          for adoption?
-        </h3>
-        <Button
-          onPress={onOpen}
-          color="danger"
-          radius="full"
-          className="bg-black mt-4"
-        >
-          Yes!
-        </Button>
+        {isAdopted ? (
+          <h3>
+            <span className="text-red-500">Adopted</span> by{" "}
+            <span className="capitalize">{adopterName}</span>
+          </h3>
+        ) : (
+          <>
+            <h3 className="text-center">
+              Considering{" "}
+              <span className="text-ungu capitalize">{pet.name}</span> for
+              adoption?
+            </h3>
+            <Button
+              onPress={onOpen}
+              color="danger"
+              radius="full"
+              className="bg-black mt-4"
+            >
+              Yes!
+            </Button>
+          </>
+        )}
       </div>
 
       {/* POTENTIAL ADOPTER */}
-      <div className="p-5 rounded-2xl border text-center bg-white">
-        <h3 className="text-center mb-2">
-          Potential Adopter
-        </h3>
-        {isPotentialAdopter ? (
-          <div className="space-x-2 space-y-2">
-            {potentialAdopter.map(({ id, name }) => {
-              return (
-                <Chip
-                  key={id}
-                  color="warning"
-                  variant="flat"
-                  startContent={<UserRoundCheck size={18} />}
-                >
-                  {name}
-                </Chip>
-              );
-            })}
-          </div>
-        ) : (
-          (<span className="text-sm text-gray-400">Currently no one has been interested in {pet.name} 🙁</span>)
-        )}
-      </div>
+      {!isAdopted ? (
+        <div className="p-5 rounded-2xl border text-center bg-white">
+          <h3 className="text-center mb-2">Potential Adopter</h3>
+          {isPotentialAdopter ? (
+            <div className="space-x-2 space-y-2">
+              {potentialAdopter.map(({ id, name }) => {
+                return (
+                  <Chip
+                    key={id}
+                    color="warning"
+                    variant="flat"
+                    startContent={<UserRoundCheck size={18} />}
+                  >
+                    {name}
+                  </Chip>
+                );
+              })}
+            </div>
+          ) : (
+            <span className="text-sm text-gray-400">
+              Currently no one has been interested in {pet.name} 🙁
+            </span>
+          )}
+        </div>
+      ) : null}
 
       {/* ADOPTER FORM */}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
