@@ -20,6 +20,7 @@ export const PotentialAdopter = ({ potentialAdopter, pet }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const router = useRouter();
   const isPotentialAdopter = potentialAdopter.length > 0;
+  const isAdopted = pet.isAdopted === true;
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -36,11 +37,11 @@ export const PotentialAdopter = ({ potentialAdopter, pet }) => {
 
     const data = {
       isAdopter: true,
-    }
+    };
 
     const dataPet = {
       isAdopted: true,
-    }
+    };
 
     const res = await fetch(`${checkEnvironment()}/api/adopter/${id}`, {
       method: "PUT",
@@ -70,11 +71,17 @@ export const PotentialAdopter = ({ potentialAdopter, pet }) => {
   return (
     <>
       <div className="p-5 rounded-2xl border text-center bg-white">
+        <h3 className="text-center mb-2">Potential Adopter</h3>
         {isPotentialAdopter ? (
           <>
-            <h3 className="text-center mb-2">Potential Adopter</h3>
-            <p>Has this cat been adopted?</p>
-            <p className="font-jua my-4">Select the adopter:</p>
+            {!isAdopted ? (
+              <>
+                <p>Has this cat been adopted?</p>
+                <p className="font-jua my-4">Select the adopter:</p>
+              </>
+            ) : (
+              <p className="font-jua my-4">Adopter has been selected.</p>
+            )}
             <div className="space-x-2 space-y-2">
               {potentialAdopter.map((item) => {
                 return (
@@ -84,6 +91,11 @@ export const PotentialAdopter = ({ potentialAdopter, pet }) => {
                     variant="flat"
                     startContent={<UserRoundCheck size={18} />}
                     onPress={() => handleOpen(item)}
+                    className={
+                      item.isAdopter === true
+                        ? "bg-purple-100 text-black"
+                        : null
+                    }
                   >
                     {item.name}
                   </Button>
@@ -119,20 +131,26 @@ export const PotentialAdopter = ({ potentialAdopter, pet }) => {
                   <p>
                     <span className="font-jua">Address:</span> {item.address}
                   </p>
-                  <form onSubmit={handleTheAdopter}>
-                    <Input name="id" defaultValue={item.id} className="hidden"/>
-                    <Button
-                      isLoading={loading}
-                      isDisabled={loading}
-                      color="danger"
-                      radius="full"
-                      size="lg"
-                      className="bg-oren w-full mt-5"
-                      type="submit"
-                    >
-                      This is the adopter
-                    </Button>
-                  </form>
+                  {!isAdopted ? (
+                    <form onSubmit={handleTheAdopter}>
+                      <Input
+                        name="id"
+                        defaultValue={item.id}
+                        className="hidden"
+                      />
+                      <Button
+                        isLoading={loading}
+                        isDisabled={loading}
+                        color="danger"
+                        radius="full"
+                        size="lg"
+                        className="bg-oren w-full mt-5"
+                        type="submit"
+                      >
+                        This is the adopter
+                      </Button>
+                    </form>
+                  ) : null}
                 </ModalBody>
               </>
             </>
