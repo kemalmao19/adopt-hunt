@@ -8,7 +8,7 @@ async function getUserData() {
   const token = cookies().get("token").value;
   const { id } = verify(token, process.env.JWT_SECRET);
   const res = await fetch(`${checkEnvironment()}/api/users/${id}`, {
-    cache: "no-store",
+    cache: "no-cache",
   });
   const data = await res.json();
   return data;
