@@ -5,7 +5,7 @@ import { checkEnvironment } from "@/config/apiUrl";
 
 async function getAdopter() {
   const res = await fetch(`${checkEnvironment()}/api/adopter`, {
-    cache: "no-store",
+    cache: "no-cache",
   });
   const data = await res.json();
   return data;
