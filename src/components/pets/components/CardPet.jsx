@@ -23,7 +23,7 @@ export const CardPet = ({
       <CardHeader className="p-0">
         <Link href={`/pets/${pet.id}`}>
           <Image
-            alt="Card background"
+            alt={pet.name}
             className="object-cover"
             src={image}
             width={700}
