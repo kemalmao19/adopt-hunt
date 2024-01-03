@@ -6,6 +6,7 @@ import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { Search } from "lucide-react";
 import { checkEnvironment } from "@/config/apiUrl";
 import { useRouter } from "next/navigation";
+import { CardPet } from "@/components/pets/components/CardPet";
 
 const getUser = async (x) => {
   const res = await fetch(`${checkEnvironment()}/api/users/${x}`);
@@ -22,7 +23,7 @@ async function getAdopter() {
   return data;
 }
 
-export const AllPets = async({ pets }) => {
+export const AllPets = async ({ pets }) => {
   const router = useRouter();
   const handleSearch = (e) => {
     const domicile = e.target.domicile.value;
@@ -51,8 +52,8 @@ export const AllPets = async({ pets }) => {
             </Select>
             <Input name="domicile" type="text" placeholder="Location" />
             <Button type="submit">
-            <Search />
-          </Button>
+              <Search />
+            </Button>
           </form>
         </div>
       </section>
@@ -69,31 +70,8 @@ export const AllPets = async({ pets }) => {
           const potentialAdopter = filterDataByPetId(adopters);
 
           return (
-            <Link key={index} href={`/pets/${pet.id}`}>
-              <div className="bg-white rounded-3xl border shadow-lg hover:scale-105 transition-all ease-in duration-100 cursor-pointer">
-                <img
-                  src={image}
-                  alt="pet"
-                  className="w-full h-auto rounded-t-3xl"
-                  width={300}
-                  height={200}
-                />
-                <section className="p-7 flex flex-col gap-8">
-                  <div className="space-y-1">
-                    <h2 className="text-3xl">{pet.name}</h2>
-                    <p className="text-gray-500 thin-text">{pet.description}</p>
-                    <p>{userLocation.user["domicile"]}</p>
-                  </div>
-                  {pet.isAdopted ? (
-                    <div className="thin-text text-orange-500">Adopted</div>
-                  ) : (
-                    <p className="text-gray-500 thin-text">
-                      Potential Adopter:{` ${potentialAdopter.length}`}
-                      <span className="font-bold">{pet.potentialAdopter}</span>
-                    </p>
-                  )}
-                </section>
-              </div>
+            <Link href={`/pets/${pet.id}`}>
+              <CardPet index={index} pet={pet} image={image} userLocation={userLocation} potentialAdopter={potentialAdopter}/>
             </Link>
           );
         })}
