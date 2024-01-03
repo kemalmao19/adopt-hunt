@@ -44,11 +44,13 @@ export const Header = () => {
             <Link
               href={"/dashboard/profile"}
               className="pl-4 border-l border-black"
+              title="profile"
             >
               <Chip
                 startContent={<CircleUser size={18} />}
                 variant="flat"
                 color="warning"
+                className="hover:shadow-md transition-all"
               >
                 {username}
               </Chip>
