@@ -1,5 +1,4 @@
 "use client";
-
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -23,22 +22,22 @@ export const UpdatePet = ({ pet }) => {
     const healthStatus = event.target.healthStatus.value;
     const images = event.target.images.files; // plural
 
-    console.log(images.name);
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("category", category);
+    formData.append("description", description);
+    formData.append("breed", breed);
+    formData.append("gender", gender);
+    formData.append("age", age);
+    formData.append("healthStatus", healthStatus);
 
-    const data = {
-      name,
-      category,
-      description,
-      images: [],
-      breed,
-      gender,
-      age: Number(age),
-      health_status: healthStatus,
-    };
+    for (let i = 0; i < images.length; i++) {
+      formData.append("images", images[i]);
+    }
 
     const res = await fetch(`/api/pets/${petData.id}`, {
       method: "PUT",
-      body: JSON.stringify(data),
+      body: formData,
     });
 
     // TODO: VALIDASI (?)
