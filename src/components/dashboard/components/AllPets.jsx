@@ -14,7 +14,15 @@ const getUser = async (x) => {
   return user;
 };
 
-export const AllPets = ({ pets }) => {
+async function getAdopter() {
+  const res = await fetch(`${checkEnvironment()}/api/adopter/`, {
+    cache: "no-store",
+  });
+  const data = await res.json();
+  return data;
+}
+
+export const AllPets = async({ pets }) => {
   const router = useRouter();
   const handleSearch = (e) => {
     const domicile = e.target.domicile.value;
@@ -22,6 +30,8 @@ export const AllPets = ({ pets }) => {
 
     router.push(`/allpets?domicile=${domicile}&category=${category}`);
   };
+
+  const { adopters } = await getAdopter();
 
   return (
     <>
@@ -51,6 +61,12 @@ export const AllPets = ({ pets }) => {
           let imageSize = "tr:w-300,h-200";
           let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
           const userLocation = await getUser(pet.userId);
+          const petId = pet.id;
+
+          const filterDataByPetId = (adopters) => {
+            return adopters.filter((item) => item.petId === petId);
+          };
+          const potentialAdopter = filterDataByPetId(adopters);
 
           return (
             <Link key={index} href={`/pets/${pet.id}`}>
@@ -72,7 +88,7 @@ export const AllPets = ({ pets }) => {
                     <div className="thin-text text-orange-500">Adopted</div>
                   ) : (
                     <p className="text-gray-500 thin-text">
-                      Potential Adopter:{" "}
+                      Potential Adopter:{` ${potentialAdopter.length}`}
                       <span className="font-bold">{pet.potentialAdopter}</span>
                     </p>
                   )}
