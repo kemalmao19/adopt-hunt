@@ -49,4 +49,8 @@
   .pet-images img{
     @apply object-cover w-full h-full;
   }
+
+  .card-pet img {
+    @apply rounded-none;
+  }
 }

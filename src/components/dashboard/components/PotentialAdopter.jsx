@@ -39,9 +39,8 @@ export const PotentialAdopter = ({ potentialAdopter, pet }) => {
       isAdopter: true,
     };
 
-    const dataPet = {
-      isAdopted: true,
-    };
+    const formData = new FormData();
+    formData.append("isAdopted", true);
 
     const res = await fetch(`${checkEnvironment()}/api/adopter/${id}`, {
       method: "PUT",
@@ -51,16 +50,13 @@ export const PotentialAdopter = ({ potentialAdopter, pet }) => {
       body: JSON.stringify(data),
     });
 
-    const resPet = await fetch(`${checkEnvironment()}/api/pets/${pet.id}`, {
+    const resPet = await fetch(`/api/pets/${pet.id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataPet),
+      body: formData,
     });
 
     // console.log(data);
-    if (res.status === 200 && resPet.status === 201) {
+    if (res.status === 200 && resPet.status === 200) {
       setLoading(false);
       toast.success("Success! 👍");
       setTimeout(() => router.refresh(), 1000);

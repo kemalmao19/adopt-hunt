@@ -40,7 +40,7 @@ export const Login = () => {
     toast.success(message);
     router.refresh(); // wajib di refresh
     setLoading(false);
-    setTimeout(() => router.push("/dashboard"), 1000);
+    setTimeout(() => router.push("/dashboard/profile"), 1000);
   }
 
   return (

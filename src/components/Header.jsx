@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useLogout } from "@/components/auth/hooks/useLogout";
 import { useUser } from "@/components/auth/hooks/useUser";
 import Cookies from "js-cookie";
-import { CircleUser } from "lucide-react";
+import { CircleUser, PawPrint } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export const Header = () => {
@@ -41,44 +41,56 @@ export const Header = () => {
             />
           </Link>
           {login && isClient ? (
-            <Link href={"/dashboard"} className="pl-4 border-l border-black">
+            <Link
+              href={"/dashboard/profile"}
+              className="pl-4 border-l border-black"
+              title="profile"
+            >
               <Chip
                 startContent={<CircleUser size={18} />}
                 variant="flat"
                 color="warning"
+                className="hover:shadow-md transition-all"
               >
                 {username}
               </Chip>
             </Link>
           ) : null}
         </div>
-        {login && isClient ? (
-          <div className="space-x-3 ml-auto md:ml-0">
-            <Link href={"/dashboard/pets"} color="foreground">
-              My Pets
-            </Link>
+          <Link
+            href={"/pets"}
+          >
+            <PawPrint size={18} className="inline"/> All Pets
+          </Link>
+        <div className="space-x-3 ml-auto md:ml-0">
+          {login && isClient ? (
+            <>
+              <Link href={"/dashboard/pets"} color="foreground">
+                My Pets
+              </Link>
+              <Button
+                href={"/dashboard/pets/add"}
+                as={Link}
+                color="default"
+                className="text-white bg-black"
+              >
+                Add Pet
+              </Button>
+              <Button onClick={handleLogout} variant="faded" color="warning">
+                Log out
+              </Button>
+            </>
+          ) : (
             <Button
-              href={"/dashboard/pets/add"}
+              href={"/dashboard"}
               as={Link}
               color="default"
-              className="text-white bg-black"
+              className="text-white bg-black "
             >
-              Add Pet
+              Are you Pet Owner?
             </Button>
-            <Button onClick={handleLogout} variant="faded" color="warning">
-              Log out
-            </Button>
-          </div>
-        ) : (
-          <Button
-            href={"/dashboard"}
-            as={Link}
-            color="default"
-            className="text-white bg-black "
-          >
-            Are you Pet Owner?
-          </Button>
-        )}
+          )}
+        </div>
       </div>
     </header>
   );

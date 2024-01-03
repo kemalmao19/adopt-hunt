@@ -19,8 +19,8 @@ export default async function Page() {
 
   return (
     <>
-      <h2>User Profile</h2>
-      <section className="space-y-5">
+      <h2 className="mt-5 mb-10">User Profile</h2>
+      <section>
         <UserProfile
           id={user.id}
           username={user.username}
