@@ -1,6 +1,6 @@
 "use server";
 import React from "react";
-import { AllPets } from "@/components/dashboard/components/AllPets";
+import { AllPets } from "@/components/pets/components/AllPets";
 import { checkEnvironment } from "@/config/apiUrl";
 
 async function getPets(domicile, category) {

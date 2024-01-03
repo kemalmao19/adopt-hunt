@@ -19,7 +19,7 @@ export const Intro = () => {
           </p>
           <div className="text-center mt-5 lg:mt-10 space-x-4 space-y-4">
             <Button href={"/dashboard"} as={Link} color="danger" className="bg-black">I'm the Pet Owner</Button>
-            <Button href={"#pets"} as={Link} color="default" variant="bordered" className="border-black">Adopter looking for new pet</Button>
+            <Button href={"/pets"} as={Link} color="default" variant="bordered" className="border-black">Explore All Pets</Button>
           </div>
         </div>
       </section>
