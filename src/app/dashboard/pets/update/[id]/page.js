@@ -4,7 +4,9 @@ import { checkEnvironment } from '@/config/apiUrl'
 
 export default async function Page(params) {
   const id = params.params.id
-  const res = await fetch(`${checkEnvironment()}/api/pets/${id}`)
+  const res = await fetch(`${checkEnvironment()}/api/pets/${id}`, {
+    cache: 'no-cache',
+  })
   const {pet} = await res.json()
 
   return (

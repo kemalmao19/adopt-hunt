@@ -1,5 +1,4 @@
 "use client";
-
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -23,27 +22,27 @@ export const UpdatePet = ({ pet }) => {
     const healthStatus = event.target.healthStatus.value;
     const images = event.target.images.files; // plural
 
-    console.log(images.name);
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("category", category);
+    formData.append("description", description);
+    formData.append("breed", breed);
+    formData.append("gender", gender);
+    formData.append("age", age);
+    formData.append("healthStatus", healthStatus);
 
-    const data = {
-      name,
-      category,
-      description,
-      images: [],
-      breed,
-      gender,
-      age: Number(age),
-      health_status: healthStatus,
-    };
+    for (let i = 0; i < images.length; i++) {
+      formData.append("images", images[i]);
+    }
 
     const res = await fetch(`/api/pets/${petData.id}`, {
       method: "PUT",
-      body: JSON.stringify(data),
+      body: formData,
     });
 
     // TODO: VALIDASI (?)
 
-    if (res.status === 201) {
+    if (res.status === 200) {
       setLoading(false);
       toast.success("Update Pet successfully 👍");
       setTimeout(() => router.push("/dashboard/pets"), 1000); // TODO: CHANGE TO MY PETS PAGE
@@ -92,7 +91,7 @@ export const UpdatePet = ({ pet }) => {
           className="my-4"
           defaultValue={petData.description}
         />
-        <Input name="images" type="file" multiple className="my-4" />
+        <input name="images" type="file" multiple className="my-4 block w-full bg-gray-100 rounded-xl p-2" />
         <Button
           isLoading={loading}
           isDisabled={loading}
