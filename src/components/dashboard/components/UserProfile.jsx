@@ -37,16 +37,17 @@ export const UserProfile = ({
       //+
       setLoading(false);
       toast.success("Edit profile successfully 👍");
-      setTimeout(() => router.push("/dashboard"), 1000);
+      router.refresh();
     }
   }
 
   return (
     <>
-      <h1 className="space-y-3 pt-20">
+      <h1 className="mt-16 mb-5">
         Hi, <span>{username}!</span>
       </h1>
-      <h3 className="text-xl font-jua">Welcome to your dashboard</h3>
+      <h3 className="text-xl font-jua mb-2">Welcome to your dashboard</h3>
+      <p className="mb-8">You can edit your profile from here.</p>
       <form className="space-y-4" onSubmit={updateUserData}>
         <label className="flex justify-start gap-5 items-center">
           E-mail:

@@ -41,7 +41,7 @@ export const Header = () => {
             />
           </Link>
           {login && isClient ? (
-            <Link href={"/dashboard"} className="pl-4 border-l border-black">
+            <Link href={"/dashboard/profile"} className="pl-4 border-l border-black">
               <Chip
                 startContent={<CircleUser size={18} />}
                 variant="flat"
