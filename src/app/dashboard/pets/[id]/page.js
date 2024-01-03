@@ -7,7 +7,7 @@ import { AdopterStory } from "@/components/pets/components/AdopterStory";
 
 async function getPet(id) {
   const res = await fetch(`${checkEnvironment()}/api/pets/${id}`, {
-    cache: "no-store",
+    cache: "no-cache",
   });
   const data = await res.json();
   return data;
@@ -15,7 +15,7 @@ async function getPet(id) {
 
 async function getAdopter() {
   const res = await fetch(`${checkEnvironment()}/api/adopter/`, {
-    cache: "no-store",
+    cache: "no-cache",
   });
   const data = await res.json();
   return data;
@@ -23,7 +23,7 @@ async function getAdopter() {
 
 async function getStory() {
   const res = await fetch(`${checkEnvironment()}/api/story/`, {
-    cache: "no-store",
+    cache: "no-cache",
   });
   const data = await res.json();
   return data;

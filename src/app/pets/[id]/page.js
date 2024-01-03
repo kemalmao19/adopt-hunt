@@ -7,7 +7,7 @@ import { checkEnvironment } from "@/config/apiUrl";
 
 async function getPet(id) {
   const res = await fetch(`${checkEnvironment()}/api/pets/${id}`, {
-    cache: "no-store",
+    cache: "no-cache",
   });
   const data = await res.json();
   return data;
@@ -15,7 +15,7 @@ async function getPet(id) {
 
 async function getPetOwner(id) {
   const res = await fetch(`${checkEnvironment()}/api/users/${id}`, {
-    cache: "no-store",
+    cache: "no-cache",
   });
   const data = await res.json();
   return data;
