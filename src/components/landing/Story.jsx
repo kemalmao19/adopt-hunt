@@ -39,23 +39,23 @@ export const Story = ({ stories }) => {
                     key={index}
                     className="mt-10 p-5 rounded-2xl border bg-white"
                   >
-                    <h3 className="capitalize">
-                      <Link href={`/pets/${petX.pet.id}`}>
+                    <Link href={`/pets/${petX.pet.id}`}>
+                      <h3 className="capitalize">
                         <PawPrint className="inline-block mr-2" />
                         {petX.pet.name}
-                      </Link>
-                    </h3>
-                    <p className="my-5 block text-gray-400">
-                      "{story.content}"
-                    </p>
-                    <Chip
-                      color="warning"
-                      variant="flat"
-                      startContent={<UserRoundCheck size={18} />}
-                      className="bg-purple-100 text-black"
-                    >
-                      {adopterName?.adopter.name}
-                    </Chip>
+                      </h3>
+                      <p className="my-5 block text-gray-400">
+                        "{story.content}"
+                      </p>
+                      <Chip
+                        color="warning"
+                        variant="flat"
+                        startContent={<UserRoundCheck size={18} />}
+                        className="bg-purple-100 text-black"
+                      >
+                        {adopterName?.adopter.name}
+                      </Chip>
+                    </Link>
                   </div>
                 </>
               );

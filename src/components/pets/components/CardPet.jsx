@@ -11,7 +11,13 @@ import {
 import { MapPin } from "lucide-react";
 import Link from "next/link";
 
-export const CardPet = ({index, pet, image, userLocation, potentialAdopter}) => {
+export const CardPet = ({
+  index,
+  pet,
+  image,
+  userLocation,
+  potentialAdopter,
+}) => {
   return (
     <Card className="card-pet h-full" key={index}>
       <CardHeader className="p-0">
@@ -46,10 +52,14 @@ export const CardPet = ({index, pet, image, userLocation, potentialAdopter}) => 
       </CardBody>
       <Divider />
       <CardFooter className="p-5">
-        <p className="text-gray-500 thin-text">
-          Potential Adopter:{` ${potentialAdopter.length}`}
-          <span className="font-bold">{pet.potentialAdopter}</span>
-        </p>
+        {pet.isAdopted ? (
+          <div className="thin-text text-orange-500">Adopted</div>
+        ) : (
+          <p className="text-gray-500 thin-text">
+            Potential Adopter:{` ${potentialAdopter.length}`}
+            <span className="font-bold">{pet.potentialAdopter}</span>
+          </p>
+        )}
       </CardFooter>
     </Card>
   );

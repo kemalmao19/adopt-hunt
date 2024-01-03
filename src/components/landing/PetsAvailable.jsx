@@ -2,16 +2,6 @@ import React from "react";
 import { imageUrl } from "@/config/apiUrl";
 import Link from "next/link";
 import { checkEnvironment } from "@/config/apiUrl";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-  Image,
-  Chip,
-} from "@nextui-org/react";
-import { MapPin } from "lucide-react";
 import { CardPet } from "../pets/components/CardPet";
 
 async function getAdopter() {
