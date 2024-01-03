@@ -41,8 +41,7 @@ export async function PUT(request, { params }) {
     for (const key in updatedPetData) {
       if (
         updatedPetData[key] !== undefined &&
-        updatedPetData[key] !== null &&
-        updatedPetData[key] !== []
+        updatedPetData[key] !== null
       ) {
         updatedFields[key] = updatedPetData[key];
       }
