@@ -39,7 +39,11 @@ export async function PUT(request, { params }) {
     // Update only the provided fields
     const updatedFields = {};
     for (const key in updatedPetData) {
-      if (updatedPetData[key] !== undefined) {
+      if (
+        updatedPetData[key] !== undefined &&
+        updatedPetData[key] !== null &&
+        updatedPetData[key] !== []
+      ) {
         updatedFields[key] = updatedPetData[key];
       }
     }
@@ -51,9 +55,20 @@ export async function PUT(request, { params }) {
       },
     });
 
-    // Merge the current data with the updated fields (if any)
-    const mergedData = { ...updatedFields, ...currentPetData };
-    console.log(mergedData)
+    // Initialize mergedData with currentPetData
+    let mergedData = { ...currentPetData, ...updatedFields };
+
+    for (const key in updatedFields) {
+      if (updatedFields[key] !== null && updatedFields[key] !== undefined) {
+        // Handle 'images' field separately to retain the current value if empty in updatedFields
+        if (key === "images" && updatedFields[key].length === 0) {
+          // If 'images' in updatedFields is empty, retain the current value
+          mergedData[key] = currentPetData[key];
+        } else {
+          mergedData[key] = updatedFields[key];
+        }
+      }
+    }
 
     // Update the pet's data in the database
     const updatedPet = await prisma.pet.update({
