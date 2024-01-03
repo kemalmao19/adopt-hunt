@@ -48,16 +48,20 @@ export const MyPets = async ({ pets }) => {
               key={index}
               className="bg-white rounded-3xl border shadow-lg hover:scale-105 transition-all ease-in duration-100 cursor-pointer"
             >
-              <img
-                src={image}
-                alt="pet"
-                className="w-full h-auto rounded-t-3xl"
-                width={300}
-                height={200}
-              />
+              <Link href={`/dashboard/pets/${pet.id}`}>
+                <img
+                  src={image}
+                  alt="pet"
+                  className="w-full h-auto rounded-t-3xl"
+                  width={300}
+                  height={200}
+                />
+              </Link>
               <section className="p-7 flex flex-col gap-8">
                 <div className="space-y-1">
-                  <h2 className="text-3xl">{pet.name}</h2>
+                  <Link href={`/dashboard/pets/${pet.id}`}>
+                    <h2 className="text-3xl">{pet.name}</h2>
+                  </Link>
                   <p className="text-gray-500 thin-text">{pet.description}</p>
                 </div>
                 {pet.isAdopted ? (

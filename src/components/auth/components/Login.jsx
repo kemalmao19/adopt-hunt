@@ -26,7 +26,7 @@ export const Login = () => {
     const { data, message, errorMessage } = await res.json();
     // console.log(data); //cek data user
 
-    Cookies.set("id", data.id); //store value user-id di cookies browser
+    Cookies.set("id", data?.id); //store value user-id di cookies browser
     Cookies.set("isLogin", true); //untuk kebutuhan dinamic header menu
 
     localStorage.setItem("userData", JSON.stringify(data)); // store data user ke localstorage
