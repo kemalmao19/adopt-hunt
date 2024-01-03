@@ -16,9 +16,10 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   const formData = await request.formData();
   const petIdToUpdate = params.id;
+  const images = formData.getAll("images");
 
   let allImages = [];
-  formData.getAll("images").forEach((x) => {
+  images.forEach((x) => {
     allImages.push(x.name);
   });
 
@@ -35,59 +36,55 @@ export async function PUT(request, { params }) {
   };
 
   try {
-    // Retrieve existing pet data from the database
-    const existingPet = await prisma.pet.findUnique({
+    // Update only the provided fields
+    const updatedFields = {};
+    for (const key in updatedPetData) {
+      if (updatedPetData[key] !== undefined) {
+        updatedFields[key] = updatedPetData[key];
+      }
+    }
+
+    // Get the current pet data from the database
+    const currentPetData = await prisma.pet.findUnique({
       where: {
         id: petIdToUpdate,
       },
     });
 
-    if (existingPet) {
-      // Update only the provided fields
-      const updatedFields = {};
-      for (const key in updatedPetData) {
-        if (updatedPetData[key] !== undefined) {
-          updatedFields[key] = updatedPetData[key];
-        }
-      }
+    // Merge the current data with the updated fields (if any)
+    const mergedData = { ...updatedFields, ...currentPetData };
+    console.log(mergedData)
 
-      // Update the pet's data in the database
-      const updatedPet = await prisma.pet.update({
-        where: {
-          id: petIdToUpdate,
-        },
-        data: updatedFields,
-      });
-      // Send Image ke AWS S3
-      try {
-        // Upload images file
-        formData.getAll("images").forEach(async (item) => {
-          const uploadFeaturedImage = await uploadFile({
-            Body: item,
-            Key: item.name,
-            ContentType: item.type,
-            Dir: `pets/${petIdToUpdate}`,
-          });
-          console.log(uploadFeaturedImage);
+    // Update the pet's data in the database
+    const updatedPet = await prisma.pet.update({
+      where: {
+        id: petIdToUpdate,
+      },
+      data: mergedData,
+    });
+
+    // Send Image ke AWS S3
+    try {
+      // Upload images file
+      images.forEach(async (item) => {
+        const uploadFeaturedImage = await uploadFile({
+          Body: item,
+          Key: item.name,
+          ContentType: item.type,
+          Dir: `pets/${petIdToUpdate}`,
         });
-      } catch (error) {
-        console.log(error);
-      }
-      return NextResponse.json(
-        {
-          message: "Pet updated successfully",
-          updatedPet,
-        },
-        { status: 200 }
-      );
-    } else {
-      return NextResponse.json(
-        {
-          message: "Pet not found",
-        },
-        { status: 404 }
-      );
+        console.log(uploadFeaturedImage);
+      });
+    } catch (error) {
+      console.log(error);
     }
+    return NextResponse.json(
+      {
+        message: "Pet updated successfully",
+        updatedPet,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error);
     return NextResponse.json(

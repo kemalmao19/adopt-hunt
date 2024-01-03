@@ -42,7 +42,7 @@ export const UpdatePet = ({ pet }) => {
 
     // TODO: VALIDASI (?)
 
-    if (res.status === 201) {
+    if (res.status === 200) {
       setLoading(false);
       toast.success("Update Pet successfully 👍");
       setTimeout(() => router.push("/dashboard/pets"), 1000); // TODO: CHANGE TO MY PETS PAGE
@@ -91,7 +91,7 @@ export const UpdatePet = ({ pet }) => {
           className="my-4"
           defaultValue={petData.description}
         />
-        <Input name="images" type="file" multiple className="my-4" />
+        <input name="images" type="file" multiple className="my-4 block w-full bg-gray-100 rounded-xl p-2" />
         <Button
           isLoading={loading}
           isDisabled={loading}
