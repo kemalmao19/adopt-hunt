@@ -89,7 +89,7 @@ export const PotentialAdopter = ({ potentialAdopter, pet }) => {
                     onPress={() => handleOpen(item)}
                     className={
                       item.isAdopter === true
-                        ? "bg-purple-100 text-black"
+                        ? "bg-purple-100 text-black is-adopter"
                         : null
                     }
                   >
@@ -112,7 +112,7 @@ export const PotentialAdopter = ({ potentialAdopter, pet }) => {
             <>
               <>
                 <ModalHeader className="flex flex-col gap-1">
-                  <h3 className="text-center">Potential Adopter info:</h3>
+                  <h3 className="text-center">Details info:</h3>
                 </ModalHeader>
                 <ModalBody>
                   <p>

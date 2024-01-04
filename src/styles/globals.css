@@ -53,4 +53,18 @@
   .card-pet img {
     @apply rounded-none;
   }
+
+  .card-pet {
+    @apply hover:scale-[1.02];
+  }
+
+  button.is-adopter {
+    overflow: unset;
+    @apply relative;
+  }
+
+  .is-adopter::before {
+    content: "adopter";
+    @apply absolute -top-[0.6rem] font-jua text-sm text-oren;
+  }
 }
