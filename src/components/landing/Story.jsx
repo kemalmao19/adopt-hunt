@@ -28,7 +28,7 @@ export const Story = ({ stories }) => {
           <h2>
             <span className="text-oren">Adopter</span> Stories
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
             {stories.map(async (story, index) => {
               const adopterName = await getAdopterName(story.adopterId);
               const petX = await getPetName(story.petId);
@@ -37,14 +37,14 @@ export const Story = ({ stories }) => {
                 <>
                   <div
                     key={index}
-                    className="mt-10 p-5 rounded-2xl border bg-white"
+                    className="p-5 rounded-2xl border bg-white"
                   >
                     <Link href={`/pets/${petX.pet.id}`}>
                       <h3 className="capitalize">
                         <PawPrint className="inline-block mr-2" />
                         {petX.pet.name}
                       </h3>
-                      <p className="my-5 block text-gray-400">
+                      <p className="my-5 text-justify text-gray-400">
                         "{story.content}"
                       </p>
                       <Chip
