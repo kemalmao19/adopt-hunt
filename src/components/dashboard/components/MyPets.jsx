@@ -5,7 +5,6 @@ import { Trash2 } from "lucide-react";
 import { Eye } from "lucide-react";
 import { imageUrl } from "@/config/apiUrl";
 import Link from "next/link";
-import { checkEnvironment } from "@/config/apiUrl";
 import {
   Card,
   CardHeader,
@@ -25,16 +24,8 @@ const deletePet = async (id) => {
   return data;
 };
 
-async function getAdopter() {
-  const res = await fetch(`${checkEnvironment()}/api/adopter/`, {
-    cache: "no-cache",
-  });
-  const data = await res.json();
-  return data;
-}
 
-export const MyPets = async ({ pets }) => {
-  const { adopters } = await getAdopter();
+export const MyPets = async ({ pets, adopters }) => {
 
   return (
     <>

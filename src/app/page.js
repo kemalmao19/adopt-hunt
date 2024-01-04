@@ -2,6 +2,7 @@ import { PetsAvailable } from "@/components/landing/PetsAvailable";
 import { Story } from "@/components/landing/Story";
 import { checkEnvironment } from "@/config/apiUrl";
 
+
 async function getPets() {
   const res = await fetch(`${checkEnvironment()}/api/pets`, {
     cache: "no-cache",
@@ -20,15 +21,25 @@ async function getStories() {
   return story;
 }
 
+async function getAdopter() {
+  const res = await fetch(`${checkEnvironment()}/api/adopter`, {
+    cache: "no-cache",
+  });
+  const data = await res.json();
+  return data;
+}
+
 export default async function Home() {
+  
   const pets = await getPets();
   const stories = await getStories();
+  const {adopters} = await getAdopter();
+  
 
   return (
     <>
-      <PetsAvailable pets={pets} />
-      {/* {typeof(stories) === "object" ? <Story stories={stories} /> : <></>} */}
-      <Story stories={stories} />
+      <PetsAvailable pets={pets} adopters={adopters}/>
+      <Story stories={stories}/>
     </>
   );
 }

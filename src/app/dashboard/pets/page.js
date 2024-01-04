@@ -15,12 +15,21 @@ async function getPets() {
   return pets;
 }
 
+async function getAdopter() {
+  const res = await fetch(`${checkEnvironment()}/api/adopter/`, {
+    cache: "no-cache",
+  });
+  const data = await res.json();
+  return data;
+}
+
 export default async function Page() {
   const pets = await getPets();
+  const { adopters } = await getAdopter();
 
   return (
     <>
-      <MyPets pets={pets}/>
+      <MyPets pets={pets} adopters={adopters}/>
     </>
   );
 }

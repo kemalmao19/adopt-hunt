@@ -9,21 +9,15 @@ import { useRouter } from "next/navigation";
 import { CardPet } from "@/components/pets/components/CardPet";
 
 const getUser = async (x) => {
-  const res = await fetch(`${checkEnvironment()}/api/users/${x}`);
+  const res = await fetch(`${checkEnvironment()}/api/users/${x}`, {
+    cache: "force-cache",
+  });
   const user = await res.json();
 
   return user;
 };
 
-async function getAdopter() {
-  const res = await fetch(`${checkEnvironment()}/api/adopter/`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-}
-
-export const AllPets = async ({ pets }) => {
+export const AllPets = async ({ pets, adopters }) => {
   const router = useRouter();
   const handleSearch = (e) => {
     const domicile = e.target.domicile.value;
@@ -31,8 +25,6 @@ export const AllPets = async ({ pets }) => {
 
     router.push(`/pets?domicile=${domicile}&category=${category}`);
   };
-
-  const { adopters } = await getAdopter();
 
   const isPets = pets.length > 0;
 

@@ -21,15 +21,23 @@ async function getPets(domicile, category) {
   return pets;
 };
 
+async function getAdopter() {
+  const res = await fetch(`${checkEnvironment()}/api/adopter/`, {
+    cache: "no-store",
+  });
+  const data = await res.json();
+  return data;
+}
+
 export default async function Page({searchParams}) {
   const domicile = searchParams.domicile
   const category = searchParams.category
   const pets = await getPets(domicile, category);
-  console.log(searchParams)
+  const { adopters } = await getAdopter();
 
   return (
     <>
-      <AllPets pets={pets}/>
+      <AllPets pets={pets} adopters={adopters} />
     </>
   );
 }

@@ -1,27 +1,20 @@
 import React from "react";
 import { imageUrl } from "@/config/apiUrl";
-import Link from "next/link";
 import { checkEnvironment } from "@/config/apiUrl";
 import { CardPet } from "../pets/components/CardPet";
 
-async function getAdopter() {
-  const res = await fetch(`${checkEnvironment()}/api/adopter`, {
-    cache: "no-cache",
-  });
-  const data = await res.json();
-  return data;
-}
-
 const getUser = async (x) => {
-  const res = await fetch(`${checkEnvironment()}/api/users/${x}`);
+  const res = await fetch(`${checkEnvironment()}/api/users/${x}`, {
+    cache: "force-cache",
+  });
   const user = await res.json();
 
   return user;
 };
 
-export const PetsAvailable = async ({ pets }) => {
+export const PetsAvailable = ({ pets, adopters }) => {
   const availablePets = pets.filter((pet) => pet.isAdopted === false);
-  const { adopters } = await getAdopter();
+
   return (
     <>
       <h2 id="pets">
