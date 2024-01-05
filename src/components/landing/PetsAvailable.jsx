@@ -2,7 +2,7 @@ import React from "react";
 import { imageUrl } from "@/config/apiUrl";
 import { CardPet } from "../pets/components/CardPet";
 
-export const PetsAvailable = ({ pets, adopters }) => {
+export const PetsAvailable = ({ pets }) => {
   const availablePets = pets.filter((pet) => pet.isAdopted === false);
 
   return (
@@ -15,15 +15,9 @@ export const PetsAvailable = ({ pets, adopters }) => {
           let imageSize = "tr:w-300,h-200";
           let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
           const userLoc = pet.users["domicile"];
-          const petId = pet.id;
-
-          const filterDataByPetId = (adopters) => {
-            return adopters.filter((item) => item.petId === petId);
-          };
-          const potentialAdopter = filterDataByPetId(adopters);
 
           return (
-            <CardPet key={index} index={index} pet={pet} image={image} userLocation={userLoc} potentialAdopter={potentialAdopter}/>
+            <CardPet key={index} index={index} pet={pet} image={image} userLocation={userLoc} potentialAdopter={pet.adopters}/>
           );
         })}
       </div>

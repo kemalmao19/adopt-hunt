@@ -7,7 +7,7 @@ import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { CardPet } from "@/components/pets/components/CardPet";
 
-export const AllPets = async ({ pets, adopters }) => {
+export const AllPets = async ({ pets }) => {
   const router = useRouter();
   const handleSearch = (e) => {
     const domicile = e.target.domicile.value;
@@ -36,7 +36,7 @@ export const AllPets = async ({ pets, adopters }) => {
             <SelectItem key="cat">Cat</SelectItem>
             <SelectItem key="dog">Dog</SelectItem>
           </Select>
-          <Input name="domicile" type="text" placeholder="Location (choose category first)" size="sm" />
+          <Input name="domicile" type="text" placeholder="Location" size="sm" />
           <Button
             isIconOnly
             color="secondary"
@@ -57,12 +57,6 @@ export const AllPets = async ({ pets, adopters }) => {
           let imageSize = "tr:w-300,h-200";
           let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
           const userLoc = pet.users.domicile
-          const petId = pet.id;
-
-          const filterDataByPetId = (adopters) => {
-            return adopters.filter((item) => item.petId === petId);
-          };
-          const potentialAdopter = filterDataByPetId(adopters);
 
           return (
             <div key={index}>
@@ -72,7 +66,7 @@ export const AllPets = async ({ pets, adopters }) => {
                   pet={pet}
                   image={image}
                   userLocation={userLoc}
-                  potentialAdopter={potentialAdopter}
+                  potentialAdopter={pet.adopters}
                 />
               </Link>
             </div>

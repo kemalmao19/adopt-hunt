@@ -24,7 +24,7 @@ const deletePet = async (id) => {
   return data;
 };
 
-export const MyPets = ({ pets, adopters }) => {
+export const MyPets = ({ pets}) => {
   const isPets = pets.length > 0;
 
   return (
@@ -37,12 +37,6 @@ export const MyPets = ({ pets, adopters }) => {
           {pets.map((pet, index) => {
             let imageSize = "tr:w-300,h-200";
             let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
-            const petId = pet.id;
-
-            const filterDataByPetId = (adopters) => {
-              return adopters.filter((item) => item.petId === petId);
-            };
-            const potentialAdopter = filterDataByPetId(adopters);
 
             return (
               <Card className="card-pet h-full" key={index}>
@@ -71,8 +65,8 @@ export const MyPets = ({ pets, adopters }) => {
                     <div className="thin-text text-orange-500">Adopted</div>
                   ) : (
                     <p className="text-gray-500 thin-text">
-                      Potential Adopter:{` ${potentialAdopter.length}`}
-                      <span className="font-bold">{pet.potentialAdopter}</span>
+                      Potential Adopter: {" "}
+                      <span className="font-bold">{`${pet.adopters.length}`}</span>
                     </p>
                   )}
                 </CardBody>
