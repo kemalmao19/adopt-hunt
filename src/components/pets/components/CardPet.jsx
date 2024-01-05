@@ -56,8 +56,8 @@ export const CardPet = ({
           <div className="thin-text text-orange-500">Adopted</div>
         ) : (
           <p className="text-gray-500 thin-text">
-            Potential Adopter:{` ${potentialAdopter.length}`}
-            <span className="font-bold">{pet.potentialAdopter}</span>
+            Potential Adopter: {" "}
+            <span className="font-bold">{` ${potentialAdopter.length}`}</span>
           </p>
         )}
       </CardFooter>

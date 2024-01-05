@@ -21,21 +21,16 @@ async function getStories() {
   return story;
 }
 
-async function getAdopter() {
-  return fetchData('adopter');
-}
-
 
 export default async function Home() {
   const pets = await getPets();
   const stories = await getStories();
-  const {adopters} = await getAdopter();
 
   return (
     <>
-      <PetsAvailable pets={pets} adopters={adopters}/>
+      <PetsAvailable pets={pets}/>
       <Story stories={stories}/>
     </>
   );
 }
-// export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic"

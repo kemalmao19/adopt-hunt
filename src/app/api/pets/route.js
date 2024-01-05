@@ -23,6 +23,7 @@ export async function GET(request) {
               domicile: true,
             },
           },
+          adopters: true,
         },
       });
       return NextResponse.json({ pets }, { status: 200 });
@@ -36,18 +37,19 @@ export async function GET(request) {
               domicile: true,
             },
           },
+          adopters: true,
         },
         where: {
           users: {
-              domicile: {
-                contains: domicile,
-                mode: "insensitive",
-              },
+            domicile: {
+              contains: domicile,
+              mode: "insensitive",
+            },
           },
-        }
+        },
       });
       if (pets) {
-        console.log(pets)
+        console.log(pets);
         return NextResponse.json({ pets }, { status: 200 });
       } else {
         return NextResponse.json({ userPet: [] }, { status: 200 });
@@ -60,6 +62,7 @@ export async function GET(request) {
               domicile: true,
             },
           },
+          adopters: true,
         },
         where: {
           category: {
@@ -80,16 +83,17 @@ export async function GET(request) {
               domicile: true,
             },
           },
+          adopters: true,
         },
         where: {
           users: {
-              domicile: {
-                contains: domicile,
-                mode: "insensitive",
-              },
+            domicile: {
+              contains: domicile,
+              mode: "insensitive",
+            },
           },
-          category
-        }
+          category,
+        },
       });
       if (pets) {
         return NextResponse.json({ pets }, { status: 200 });
@@ -104,6 +108,7 @@ export async function GET(request) {
               domicile: true,
             },
           },
+          adopters: true,
         },
         where: {
           OR: [
@@ -130,6 +135,9 @@ export async function GET(request) {
       }
     } else if (userId) {
       pets = await prisma.pet.findMany({
+        include: {
+          adopters: true,
+        },
         where: {
           userId,
         },
@@ -139,7 +147,10 @@ export async function GET(request) {
     }
   } catch (error) {
     console.error("Error in GET request:", error);
-    return NextResponse.json({ message: "Failed to process the request." }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to process the request." },
+      { status: 500 }
+    );
   }
 }
 
