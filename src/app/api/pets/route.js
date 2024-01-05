@@ -29,22 +29,35 @@ export async function GET(request) {
     }
 
     if (domicile && !category) {
-      pets = await prisma.user.findMany({
+      pets = await prisma.pet.findMany({
         include: {
-          pets: true,
+          users: {
+            select: {
+              domicile: true,
+            },
+          },
         },
         where: {
-          domicile,
-        },
+          users: {
+              domicile,
+          },
+        }
       });
       if (pets) {
-        const allPets = pets[0].pets;
-        return NextResponse.json({ allPets }, { status: 200 });
+        console.log(pets)
+        return NextResponse.json({ pets }, { status: 200 });
       } else {
         return NextResponse.json({ userPet: [] }, { status: 200 });
       }
     } else if (!domicile && category) {
       pets = await prisma.pet.findMany({
+        include: {
+          users: {
+            select: {
+              domicile: true,
+            },
+          },
+        },
         where: {
           category: {
             contains: category,
@@ -57,32 +70,35 @@ export async function GET(request) {
         return NextResponse.json({ pets: [] }, { status: 200 });
       }
     } else if (domicile && category) {
-      const usersWithDomicileAndPetsInCategory = await prisma.user.findMany({
-        where: {
-          domicile,
-          pets: {
-            some: {
-              category: {
-                contains: category,
-              },
-            },
-          },
-        },
+      pets = await prisma.pet.findMany({
         include: {
-          pets: {
-            where: {
-              category: {
-                contains: category,
-              },
+          users: {
+            select: {
+              domicile: true,
             },
           },
         },
+        where: {
+          users: {
+              domicile,
+          },
+          category
+        }
       });
-
-      const allPets = usersWithDomicileAndPetsInCategory.flatMap((user) => user.pets);
-      return NextResponse.json({ pets: allPets }, { status: 200 });
+      if (pets) {
+        return NextResponse.json({ pets }, { status: 200 });
+      } else {
+        return NextResponse.json({ pets: [] }, { status: 200 });
+      }
     } else if (query) {
       pets = await prisma.pet.findMany({
+        include: {
+          users: {
+            select: {
+              domicile: true,
+            },
+          },
+        },
         where: {
           OR: [
             {
