@@ -3,7 +3,7 @@ import { Chip } from "@nextui-org/react";
 import { UserRoundCheck, PawPrint } from "lucide-react";
 import Link from "next/link";
 
-export const Story = ({ stories, adopter, pet }) => {
+export const Story = ({ stories }) => {
   const isSories = stories.length > 0;
 
   return (
@@ -15,9 +15,9 @@ export const Story = ({ stories, adopter, pet }) => {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
             {stories.map((story, index) => {
-              const adopterName = story.adopter.name;
-              const petName = story.pets.name
-              const petId = story.pets.id
+              const adopterName = story.adopter["name"];
+              const petName = story.pets["name"];
+              const petId = story.pets["id"];
 
               return (
                 <div key={index}>
