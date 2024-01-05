@@ -4,7 +4,7 @@ import React from 'react'
 export default function Page() {
   return (
     <>
-        <h2 className='mb-5'>Add New Pet</h2>
+        <h2 className='my-5'>Add New Pet</h2>
         <section className='mt-10'>
             <CreatePet/>
         </section>
