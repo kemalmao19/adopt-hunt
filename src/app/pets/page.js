@@ -10,6 +10,15 @@ async function getPets(domicile, category) {
     });
     const { pets } = await res.json();
     return pets;
+  } else if (domicile && !category) {
+    const res = await fetch(
+      `${checkEnvironment()}/api/pets?domicile=${domicile}`,
+      {
+        cache: "no-cache",
+      }
+    );
+    const {pets} = await res.json();
+    return pets
   }
   const res = await fetch(
     `${checkEnvironment()}/api/pets?domicile=${domicile}&category=${category}`,
@@ -34,6 +43,8 @@ export default async function Page({searchParams}) {
   const category = searchParams.category
   const pets = await getPets(domicile, category);
   const { adopters } = await getAdopter();
+  console.log(pets)
+  console.log(searchParams)
 
   return (
     <>

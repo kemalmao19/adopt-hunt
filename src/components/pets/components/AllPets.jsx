@@ -53,7 +53,7 @@ export const AllPets = async ({ pets, adopters }) => {
         </p>
       ) : null}
       <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 my-16">
-        {pets.map(async (pet, index) => {
+        {pets.map((pet, index) => {
           let imageSize = "tr:w-300,h-200";
           let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
           const userLoc = pet.users.domicile
@@ -65,7 +65,7 @@ export const AllPets = async ({ pets, adopters }) => {
           const potentialAdopter = filterDataByPetId(adopters);
 
           return (
-            <>
+            <div key={index}>
               <Link href={`/pets/${pet.id}`}>
                 <CardPet
                   index={index}
@@ -75,7 +75,7 @@ export const AllPets = async ({ pets, adopters }) => {
                   potentialAdopter={potentialAdopter}
                 />
               </Link>
-            </>
+            </div>
           );
         })}
       </section>
