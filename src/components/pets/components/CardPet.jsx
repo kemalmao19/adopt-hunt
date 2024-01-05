@@ -46,7 +46,7 @@ export const CardPet = ({
             className="mt-2 capitalize text-xs"
             size="sm"
           >
-            {userLocation.user["domicile"]}
+            {userLocation}
           </Chip>
         </div>
       </CardBody>

@@ -3,15 +3,6 @@ import { imageUrl } from "@/config/apiUrl";
 import { checkEnvironment } from "@/config/apiUrl";
 import { CardPet } from "../pets/components/CardPet";
 
-const getUser = async (x) => {
-  const res = await fetch(`${checkEnvironment()}/api/users/${x}`, {
-    cache: "force-cache",
-  });
-  const user = await res.json();
-
-  return user;
-};
-
 export const PetsAvailable = ({ pets, adopters }) => {
   const availablePets = pets.filter((pet) => pet.isAdopted === false);
 
@@ -24,7 +15,7 @@ export const PetsAvailable = ({ pets, adopters }) => {
         {availablePets.map(async (pet, index) => {
           let imageSize = "tr:w-300,h-200";
           let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
-          const userLocation = await getUser(pet.userId);
+          const userLoc = pet.users.domicile
           const petId = pet.id;
 
           const filterDataByPetId = (adopters) => {
@@ -33,7 +24,7 @@ export const PetsAvailable = ({ pets, adopters }) => {
           const potentialAdopter = filterDataByPetId(adopters);
 
           return (
-            <CardPet index={index} pet={pet} image={image} userLocation={userLocation} potentialAdopter={potentialAdopter}/>
+            <CardPet index={index} pet={pet} image={image} userLocation={userLoc} potentialAdopter={potentialAdopter}/>
           );
         })}
       </div>

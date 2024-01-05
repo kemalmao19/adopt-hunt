@@ -31,7 +31,6 @@ export default async function Home() {
   const pets = await getPets();
   const stories = await getStories();
   const {adopters} = await getAdopter();
-  
 
   return (
     <>
