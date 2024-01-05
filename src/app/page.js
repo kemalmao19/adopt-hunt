@@ -1,6 +1,7 @@
 import { PetsAvailable } from "@/components/landing/PetsAvailable";
 import { Story } from "@/components/landing/Story";
 import { checkEnvironment } from "@/config/apiUrl";
+import prisma from "@/utils/prisma";
 
 
 async function fetchData(endpoint) {
@@ -16,15 +17,30 @@ async function getPets() {
   return pets;
 }
 
-async function getStories() {
-  const { story } = await fetchData('story');
-  return story;
-}
 
+async function dapetinStory() {
+  const story = await prisma.story.findMany({
+    include: {
+      pets: {
+        select: {
+          name: true,
+          id: true
+        }
+      },
+      adopter: {
+        select: {
+          name: true
+        },
+      }
+    }
+  });
+  return story
+}
 
 export default async function Home() {
   const pets = await getPets();
-  const stories = await getStories();
+  // const stories = await getStories();
+  const stories = await dapetinStory();
 
   return (
     <>
