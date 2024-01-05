@@ -39,7 +39,10 @@ export async function GET(request) {
         },
         where: {
           users: {
-              domicile,
+              domicile: {
+                contains: domicile,
+                mode: "insensitive",
+              },
           },
         }
       });
@@ -80,7 +83,10 @@ export async function GET(request) {
         },
         where: {
           users: {
-              domicile,
+              domicile: {
+                contains: domicile,
+                mode: "insensitive",
+              },
           },
           category
         }
