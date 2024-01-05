@@ -4,17 +4,31 @@ import { checkEnvironment } from "@/config/apiUrl";
 import prisma from "@/utils/prisma";
 
 
-async function fetchData(endpoint) {
-  const res = await fetch(`${checkEnvironment()}/api/${endpoint}`, {
-    cache: "no-cache",
-  });
-  const data = await res.json();
-  return data;
-}
+// async function fetchData(endpoint) {
+//   const res = await fetch(`${checkEnvironment()}/api/${endpoint}`, {
+//     cache: "no-cache",
+//   });
+//   const data = await res.json();
+//   return data;
+// }
+
+// async function getPets() {
+//   const { pets } = await fetchData('pets');
+//   return pets;
+// }
 
 async function getPets() {
-  const { pets } = await fetchData('pets');
-  return pets;
+  const pets = await prisma.pet.findMany({
+    include: {
+      users: {
+        select: {
+          domicile: true,
+        },
+      },
+      adopters: true,
+    },
+  });
+  return pets
 }
 
 
