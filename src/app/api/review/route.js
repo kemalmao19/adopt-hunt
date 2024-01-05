@@ -14,13 +14,13 @@ export async function POST(req) {
     const data = await req.json();
   
     try {
-      // Create story to database
-      const review = await prisma.story.create({
+      // Create review to database
+      const review = await prisma.review.create({
         data
       });
   
       return NextResponse.json(
-        { data: review, message: "Success! Potential Review Added" },
+        { data: review, message: "Success! Review Added" },
         { status: 201 }
       );
     } catch (error) {

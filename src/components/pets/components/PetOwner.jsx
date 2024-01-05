@@ -1,12 +1,9 @@
-import {
-  Card,
-  CardHeader,
-  Avatar,
-  Chip,
-} from "@nextui-org/react";
+import { Card, CardHeader, Avatar, Chip } from "@nextui-org/react";
 import { MapPin } from "lucide-react";
 
-export const PetOwner = ({ user }) => {
+export const PetOwner = ({ user, reviews }) => {
+  const isReview = reviews.length > 0;
+
   return (
     <div className="pet-owner p-5 rounded-2xl border bg-white">
       <h3>Pet Owner info</h3>
@@ -41,6 +38,22 @@ export const PetOwner = ({ user }) => {
           </div>
         </CardHeader>
       </Card>
+
+      {isReview && (
+        <div className="border border-dashed pt-1 pb-2 px-4 rounded-xl mt-5">
+          <h3 className="text-[18px]">Reviews:</h3>
+          {reviews.map(({ id, content }) => {
+            return (
+              <p
+                key={id}
+                className="text-[14px] text-gray-500 p-1 mb-2 border border-dashed rounded-md"
+              >
+                "{content}"
+              </p>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

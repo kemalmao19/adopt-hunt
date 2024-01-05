@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 import { apiUrl, checkEnvironment } from "@/config/apiUrl";
 import toast from "react-hot-toast";
 import { PetOwnerContact } from "./PetOwnerContact";
-import { UserRoundCheck } from "lucide-react";
+import { UserRoundCheck, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export const AdoptionProcess = ({
@@ -39,6 +39,8 @@ export const AdoptionProcess = ({
   const [submitStory, setSubmitStory] = useState({
     content: "",
   });
+  // const [rating, setRating] = useState("");
+  const [review, setReview] = useState("");
 
   const petId = pet.id;
   const userId = pet.userId;
@@ -66,6 +68,18 @@ export const AdoptionProcess = ({
       ...submitAdopter,
       [name]: value,
     });
+  };
+
+  // const handleRatingChange = (event) => {
+  //   const inputRating = event.target.value;
+  //   // Validate if the input is a number and within the desired range
+  //   if (!isNaN(inputRating) && inputRating >= 1 && inputRating <= 5) {
+  //     setRating(inputRating);
+  //   }
+  // };
+
+  const handleReviewChange = (event) => {
+    setReview(event.target.value);
   };
 
   const handleStoryChange = (e) => {
@@ -112,7 +126,7 @@ export const AdoptionProcess = ({
     setIsSubmit(true);
   }
 
-  async function handleSubmitStory() {
+  async function handleSubmitFeedback() {
     setLoading(true);
     const { content } = submitStory;
 
@@ -127,13 +141,25 @@ export const AdoptionProcess = ({
         petId: petId,
       }),
     });
-    const data = await res.json();
+    // const data = await res.json();
+    // console.log({data})
 
-    if (!data) {
-      setLoading(false);
-      toast.error("Error -..-");
-      return;
-    }
+    const resReview = await fetch(`${checkEnvironment()}/api/review`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: review,
+        adopterId: adopterId,
+        userId: userId,
+      }),
+    });
+    // const dataReview = await resReview.json();
+    // console.log({dataReview})
+
+    // console.log("Review:", review);
+    // console.log("Rating:", rating);
 
     setLoading(false);
     toast.success("Story submit successfully!");
@@ -186,7 +212,7 @@ export const AdoptionProcess = ({
         )}
       </div>
 
-      {/* STORY-CHECK EMAIL, STORY FORM */}
+      {/* STORY-CHECK EMAIL, STORY FORM , REVIEW FORM*/}
       {!isStory ? (
         <>
           {" "}
@@ -194,7 +220,8 @@ export const AdoptionProcess = ({
             <div className="p-5 rounded-2xl border bg-white mt-5">
               <h3>Are you the Adopter?</h3>
               <p className="mb-3 text-gray-500 text-sm">
-                You can share your story about your new pet.
+                You can share your story about your new pet and give feedback to
+                the Pet Owner.
               </p>
               <p className="mb-4 font-jua">First, please Type your email.</p>
               <div className="space-y-3">
@@ -210,21 +237,51 @@ export const AdoptionProcess = ({
                   <div>
                     {isEmailMatched ? (
                       <>
+                        <p className="mb-4 font-jua text-green-500">
+                          Email matched!
+                        </p>
                         <p className="mb-4 font-jua">
-                          <span className="text-green-500">Email matched!</span>{" "}
-                          Please submit your story
+                          Then, Please submit your feedback
                         </p>
                         <form className="space-y-3">
                           <Textarea
                             name="content"
-                            label="Your story"
+                            label="Your story about your new pet"
                             variant="bordered"
                             onChange={handleStoryChange}
                           ></Textarea>
+                          <Textarea
+                            name="contentReview"
+                            value={review}
+                            onChange={handleReviewChange}
+                            label="Write your review for the Pet Owner"
+                            variant="bordered"
+                          ></Textarea>
+                          {/* <div className="flex gap-1 pb-3">
+                            <label>Rating: </label>
+                            {[1, 2, 3, 4, 5].map((value) => (
+                              <label key={value}>
+                                <input
+                                  type="radio"
+                                  name="rating"
+                                  value={value}
+                                  checked={rating === value.toString()}
+                                  onChange={handleRatingChange}
+                                  className="hidden"
+                                />
+                                <Star
+                                  color={
+                                    value <= rating ? "#ffc107" : "#e4e5e9"
+                                  }
+                                  className="cursor-pointer"
+                                />
+                              </label>
+                            ))}
+                          </div> */}
                           <Button
                             isLoading={loading}
                             isDisabled={loading}
-                            onClick={handleSubmitStory}
+                            onClick={handleSubmitFeedback}
                             color="danger"
                             radius="full"
                             size="lg"
