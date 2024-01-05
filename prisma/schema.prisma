@@ -43,7 +43,7 @@ model Pet {
 
   users User @relation(fields: [userId], references: [id])
 
-  @@index([slug])
+  @@index([slug, id])
 }
 
 model Adopter {
