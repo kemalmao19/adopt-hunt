@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 import { PetOwnerContact } from "./PetOwnerContact";
 import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { PotentialAdopter } from "./PotentialAdopter";
+import { PotentialAdopterNameOnly } from "./PotentialAdopterNameOnly";
 
 export const AdoptionProcess = ({
   pet,
@@ -183,7 +183,7 @@ export const AdoptionProcess = ({
   return (
     <div className="space-y-6">
       {/* PET OWNER CONTACT */}
-      {isSubmit ? <PetOwnerContact user={user} /> : null}
+      {isSubmit && <PetOwnerContact user={user} /> }
 
       {/* PET STATUS */}
       <div className="p-5 rounded-2xl border-oren border-2 text-center bg-oren-light">
@@ -304,7 +304,7 @@ export const AdoptionProcess = ({
       ) : null}
 
       {/* POTENTIAL ADOPTER */}
-      <PotentialAdopter isAdopted={isAdopted} isPotentialAdopter={isPotentialAdopter} potentialAdopter={potentialAdopter} pet={pet}/>
+      <PotentialAdopterNameOnly isAdopted={isAdopted} isPotentialAdopter={isPotentialAdopter} potentialAdopter={potentialAdopter} pet={pet}/>
 
       {/* ADOPTER FORM */}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>

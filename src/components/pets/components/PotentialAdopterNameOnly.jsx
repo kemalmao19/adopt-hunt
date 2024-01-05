@@ -2,7 +2,7 @@ import { Chip } from "@nextui-org/react";
 import { UserRoundCheck } from "lucide-react";
 import React from "react";
 
-export const PotentialAdopter = ({isAdopted, isPotentialAdopter, potentialAdopter, pet}) => {
+export const PotentialAdopterNameOnly = ({isAdopted, isPotentialAdopter, potentialAdopter, pet}) => {
   return (
     <>
       {!isAdopted && (
