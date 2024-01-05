@@ -8,15 +8,15 @@ import {
   ModalHeader,
   ModalBody,
   useDisclosure,
-  Chip,
   Textarea,
 } from "@nextui-org/react";
 import { useState, useEffect } from "react";
-import { apiUrl, checkEnvironment } from "@/config/apiUrl";
+import { checkEnvironment } from "@/config/apiUrl";
 import toast from "react-hot-toast";
 import { PetOwnerContact } from "./PetOwnerContact";
-import { UserRoundCheck, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { PotentialAdopter } from "./PotentialAdopter";
 
 export const AdoptionProcess = ({
   pet,
@@ -45,8 +45,7 @@ export const AdoptionProcess = ({
   const petId = pet.id;
   const userId = pet.userId;
 
-  const potentialAdopterLenght = potentialAdopter.length;
-  const isPotentialAdopter = potentialAdopterLenght > 0;
+  const isPotentialAdopter = potentialAdopter.length > 0;
   const isAdopted = pet.isAdopted === true;
   const isStory = storyAdopter.length > 0;
 
@@ -305,31 +304,7 @@ export const AdoptionProcess = ({
       ) : null}
 
       {/* POTENTIAL ADOPTER */}
-      {!isAdopted ? (
-        <div className="p-5 rounded-2xl border text-center bg-white">
-          <h3 className="text-center mb-2">Potential Adopter</h3>
-          {isPotentialAdopter ? (
-            <div className="space-x-2 space-y-2">
-              {potentialAdopter.map(({ id, name }) => {
-                return (
-                  <Chip
-                    key={id}
-                    color="warning"
-                    variant="flat"
-                    startContent={<UserRoundCheck size={18} />}
-                  >
-                    {name}
-                  </Chip>
-                );
-              })}
-            </div>
-          ) : (
-            <span className="text-sm text-gray-400">
-              Currently no one has been interested in {pet.name} 🙁
-            </span>
-          )}
-        </div>
-      ) : null}
+      <PotentialAdopter isAdopted={isAdopted} isPotentialAdopter={isPotentialAdopter} potentialAdopter={potentialAdopter} pet={pet}/>
 
       {/* ADOPTER FORM */}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
