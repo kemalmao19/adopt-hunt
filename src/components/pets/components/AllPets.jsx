@@ -60,15 +60,13 @@ export const AllPets = async ({ pets }) => {
 
           return (
             <div key={index}>
-              <Link href={`/pets/${pet.id}`}>
-                <CardPet
-                  index={index}
-                  pet={pet}
-                  image={image}
-                  userLocation={userLoc}
-                  potentialAdopter={pet.adopters}
-                />
-              </Link>
+              <CardPet
+                index={index}
+                pet={pet}
+                image={image}
+                userLocation={userLoc}
+                potentialAdopter={pet.adopters}
+              />
             </div>
           );
         })}
