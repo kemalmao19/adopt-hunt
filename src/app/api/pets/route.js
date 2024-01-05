@@ -16,7 +16,15 @@ export async function GET(request) {
     let pets = null;
 
     if (!(domicile || category || query || userId)) {
-      pets = await prisma.pet.findMany();
+      pets = await prisma.pet.findMany({
+        include: {
+          users: {
+            select: {
+              domicile: true,
+            },
+          },
+        },
+      });
       return NextResponse.json({ pets }, { status: 200 });
     }
 

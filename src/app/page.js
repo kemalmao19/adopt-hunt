@@ -31,7 +31,6 @@ export default async function Home() {
   const pets = await getPets();
   const stories = await getStories();
   const {adopters} = await getAdopter();
-  
 
   return (
     <>
@@ -40,3 +39,5 @@ export default async function Home() {
     </>
   );
 }
+
+export const dynamic = "force-dynamic"

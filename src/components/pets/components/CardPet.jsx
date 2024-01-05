@@ -21,7 +21,7 @@ export const CardPet = ({
   return (
     <Card className="card-pet h-full" key={index}>
       <CardHeader className="p-0">
-        <Link href={`/pets/${pet.id}`}>
+        <Link href={`/pets/${pet['id']}`}>
           <Image
             alt={pet.name}
             className="object-cover"
@@ -46,7 +46,7 @@ export const CardPet = ({
             className="mt-2 capitalize text-xs"
             size="sm"
           >
-            {userLocation.user["domicile"]}
+            {userLocation}
           </Chip>
         </div>
       </CardBody>

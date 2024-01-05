@@ -24,7 +24,7 @@ const deletePet = async (id) => {
   return data;
 };
 
-export const MyPets = async ({ pets, adopters }) => {
+export const MyPets = ({ pets, adopters }) => {
   const isPets = pets.length > 0;
 
   return (

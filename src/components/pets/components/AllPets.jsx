@@ -4,18 +4,8 @@ import { imageUrl } from "@/config/apiUrl";
 import Link from "next/link";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { Search } from "lucide-react";
-import { checkEnvironment } from "@/config/apiUrl";
 import { useRouter } from "next/navigation";
 import { CardPet } from "@/components/pets/components/CardPet";
-
-const getUser = async (x) => {
-  const res = await fetch(`${checkEnvironment()}/api/users/${x}`, {
-    cache: "force-cache",
-  });
-  const user = await res.json();
-
-  return user;
-};
 
 export const AllPets = async ({ pets, adopters }) => {
   const router = useRouter();
@@ -66,7 +56,7 @@ export const AllPets = async ({ pets, adopters }) => {
         {pets.map(async (pet, index) => {
           let imageSize = "tr:w-300,h-200";
           let image = `${imageUrl}/${imageSize}/pets/${pet.id}/${pet.images[0]}`;
-          const userLocation = await getUser(pet.userId);
+          const userLoc = pet.users.domicile
           const petId = pet.id;
 
           const filterDataByPetId = (adopters) => {
@@ -81,7 +71,7 @@ export const AllPets = async ({ pets, adopters }) => {
                   index={index}
                   pet={pet}
                   image={image}
-                  userLocation={userLocation}
+                  userLocation={userLoc}
                   potentialAdopter={potentialAdopter}
                 />
               </Link>

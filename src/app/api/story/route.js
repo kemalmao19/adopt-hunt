@@ -2,7 +2,21 @@ import prisma from "@/utils/prisma"
 import { NextResponse } from "next/server";
 export async function GET() {
     try {
-        const story= await prisma.story.findMany() 
+        const story= await prisma.story.findMany({
+          include: {
+            adopter: {
+              select: {
+                name: true
+              },
+            },
+            pets: {
+              select: {
+                id: true,
+                name: true
+              },
+            }
+          }
+        }) 
         return NextResponse.json({story},{status:200})
     } catch (error) {
         console.log(error)
