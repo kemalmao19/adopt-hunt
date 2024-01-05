@@ -1,14 +1,11 @@
-"use server";
 import React from "react";
 import { AllPets } from "@/components/pets/components/AllPets";
 import { checkEnvironment } from "@/config/apiUrl";
+import { getPets as getPet } from "@/lib/fetchFunc";
 
 async function getPets(domicile, category) {
   if (!domicile && !category) {
-    const res = await fetch(`${checkEnvironment()}/api/pets`, {
-      cache: "no-cache",
-    });
-    const { pets } = await res.json();
+    const pets = await getPet();
     return pets;
   } else if (domicile && !category) {
     const res = await fetch(
@@ -41,3 +38,5 @@ export default async function Page({searchParams}) {
     </>
   );
 }
+
+export const dynamic = "force-dynamic";
