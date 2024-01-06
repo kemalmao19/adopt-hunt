@@ -20,7 +20,7 @@ export async function GET() {
         return NextResponse.json({story},{status:200})
     } catch (error) {
         console.log(error)
-        return NextResponse.json({errorMessage:"Error!"},{status:500})
+        return NextResponse.json({message:"Error!"},{status:500})
     }
 }
 
@@ -40,7 +40,7 @@ export async function POST(req) {
     } catch (error) {
       console.log(error);
       return NextResponse.json(
-        { errorMessage: "Something went wrong. Please try again later" },
+        { message: "Something went wrong. Please try again later" },
         { status: 500 }
       );
     }
