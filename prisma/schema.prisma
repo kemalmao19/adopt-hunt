@@ -37,6 +37,7 @@ model Pet {
   health_status String
   age           Int?
   isAdopted     Boolean @default(false)
+  isDeleted     Boolean @default(false)
   adopters      Adopter[]
   stories       Story[]
   userId        String
