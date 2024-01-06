@@ -33,6 +33,7 @@ export async function PUT(request, { params }) {
     health_status: formData.get("healthStatus"),
     age: Number(formData.get("age")),
     isAdopted: Boolean(formData.get("isAdopted")),
+    isDeleted: Boolean(formData.get("isDeleted")),
   };
 
   try {
