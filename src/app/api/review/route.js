@@ -34,7 +34,7 @@ export async function POST(req) {
     });
 
     return NextResponse.json(
-      { data: review, message: "Success! Potential Review Added" },
+      { data: review, message: "Success! Review Added" },
       { status: 201 }
     );
   } catch (error) {

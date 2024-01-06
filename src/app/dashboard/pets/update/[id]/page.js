@@ -11,7 +11,7 @@ export default async function Page(params) {
 
   return (
     <>
-        <h2 className='mb-5'>Update Pet</h2>
+        <h2 className='my-5'>Update Pet</h2>
         <section className='mt-10'>
             <UpdatePet pet={pet}/>
         </section>

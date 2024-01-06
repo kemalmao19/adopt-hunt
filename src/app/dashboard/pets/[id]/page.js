@@ -4,6 +4,8 @@ import { PetAbout } from "@/components/pets/components/PetAbout";
 import { PetInfo } from "@/components/pets/components/PetInfo";
 import { checkEnvironment } from "@/config/apiUrl";
 import { AdopterStory } from "@/components/pets/components/AdopterStory";
+import { getReviews } from "@/lib/fetchFunc";
+import { AdopterReview } from "@/components/dashboard/components/AdopterReview";
 
 async function getPet(id) {
   const res = await fetch(`${checkEnvironment()}/api/pets/${id}`, {
@@ -29,11 +31,20 @@ async function getStory() {
   return data;
 }
 
+// async function getReview(id) {
+//   const res = await fetch(`${checkEnvironment()}/api/review/${id}`, {
+//     cache: "no-cache",
+//   });
+//   const data = await res.json();
+//   return data;
+// }
+
 export default async function Page({ params }) {
   const { id } = params;
   const { pet } = await getPet(id);
   const { adopters } = await getAdopter();
   const { story } = await getStory();
+  const review = await getReviews();
   const petId = pet.id;
 
   // filter adopters by the same petId
@@ -65,9 +76,10 @@ export default async function Page({ params }) {
         </div>
         {/* RIGHT */}
         <div className="space-y-6 pt-10">
-          <PetStatus pet={pet} adopter={adopter}/>
-          <AdopterStory storyAdopter={storyAdopter} adopter={adopter}/>
-          <PotentialAdopter potentialAdopter={potentialAdopter} pet={pet}/>
+          <PetStatus pet={pet} adopter={adopter} />
+          <AdopterReview review={review} adopter={adopter}/>
+          <AdopterStory storyAdopter={storyAdopter} adopter={adopter} />
+          <PotentialAdopter potentialAdopter={potentialAdopter} pet={pet} />
         </div>
       </div>
     </>

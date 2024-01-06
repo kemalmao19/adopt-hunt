@@ -27,7 +27,7 @@ export const AllPets = async ({ pets }) => {
       </section>
 
       <div className="flex gap-4 items-center mt-10 max-w-3xl mx-auto">
-        <h2>Search</h2>
+        <h2>Filter</h2>
         <form
           className="flex gap-2 w-full items-center"
           onSubmit={handleSearch}
@@ -60,15 +60,13 @@ export const AllPets = async ({ pets }) => {
 
           return (
             <div key={index}>
-              <Link href={`/pets/${pet.id}`}>
-                <CardPet
-                  index={index}
-                  pet={pet}
-                  image={image}
-                  userLocation={userLoc}
-                  potentialAdopter={pet.adopters}
-                />
-              </Link>
+              <CardPet
+                index={index}
+                pet={pet}
+                image={image}
+                userLocation={userLoc}
+                potentialAdopter={pet.adopters}
+              />
             </div>
           );
         })}
