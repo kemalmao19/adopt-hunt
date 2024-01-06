@@ -38,7 +38,7 @@ export default async function Page({ params }) {
     return potentialAdopter.filter((item) => item.isAdopter === true);
   };
 
-  const adopterName = filterAdopter(adopterInfo)[0].name;
+  const adopterName = filterAdopter(adopterInfo)[0]?.name;
 
   const reviewInfo = petDetails.users.reviews;
 

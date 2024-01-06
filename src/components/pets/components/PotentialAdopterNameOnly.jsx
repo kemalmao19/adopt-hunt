@@ -10,10 +10,10 @@ export const PotentialAdopterNameOnly = ({isAdopted, isPotentialAdopter, potenti
           <h3 className="text-center mb-2">Potential Adopter</h3>
           {isPotentialAdopter ? (
             <div className="space-x-2 space-y-2">
-              {potentialAdopter.map(({ id, name }) => {
+              {potentialAdopter.map(({ name }, index) => {
                 return (
                   <Chip
-                    key={id}
+                    key={index}
                     color="warning"
                     variant="flat"
                     startContent={<UserRoundCheck size={18} />}
