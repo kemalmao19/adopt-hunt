@@ -23,6 +23,7 @@ export const AdoptionProcess = ({
   user,
   potentialAdopter,
   adopter,
+  nameAdopter,
   storyAdopter,
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -50,7 +51,7 @@ export const AdoptionProcess = ({
   const isStory = storyAdopter.length > 0;
 
   const adopterId = adopter[0]?.id;
-  const adopterName = adopter[0]?.name;
+  const adopterName = nameAdopter;
   const adopterEmail = adopter[0]?.email;
 
   const [submittedEmail, setSubmittedEmail] = useState("");

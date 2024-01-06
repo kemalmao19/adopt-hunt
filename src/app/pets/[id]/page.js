@@ -3,7 +3,7 @@ import { AdoptionProcess } from "@/components/pets/components/AdoptionProcess";
 import { PetAbout } from "@/components/pets/components/PetAbout";
 import { PetInfo } from "@/components/pets/components/PetInfo";
 import { PetOwner } from "@/components/pets/components/PetOwner";
-import { getPetDetails} from "@/lib/fetchFunc";
+import { getPetDetails } from "@/lib/fetchFunc";
 
 export default async function Page({ params }) {
   const { id } = params;
@@ -20,7 +20,7 @@ export default async function Page({ params }) {
     age: petDetails.age,
     images: petDetails.images,
     isAdopted: petDetails.isAdopted,
-  }
+  };
 
   const userInfo = {
     id: petDetails.users.id,
@@ -28,14 +28,14 @@ export default async function Page({ params }) {
     bio: petDetails.users.bio,
     domicile: petDetails.users.domicile,
     contact: petDetails.users.contact,
-  }
+  };
 
-  const adopterInfo = petDetails.adopters
+  const adopterInfo = petDetails.adopters;
 
-  const storiesInfo = petDetails.stories
+  const storiesInfo = petDetails.stories;
+  const adopterName = storiesInfo[0]?.adopter.name;
 
-  const reviewInfo = petDetails.users.reviews
-  console.log(reviewInfo)
+  const reviewInfo = petDetails.users.reviews;
 
   return (
     <>
@@ -53,6 +53,7 @@ export default async function Page({ params }) {
             user={userInfo}
             potentialAdopter={adopterInfo}
             adopter={adopterInfo}
+            nameAdopter={adopterName}
             storyAdopter={storiesInfo}
           />
           <AdopterStory storyAdopter={storiesInfo} adopter={adopterInfo} />
