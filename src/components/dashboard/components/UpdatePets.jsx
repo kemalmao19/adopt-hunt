@@ -40,12 +40,11 @@ export const UpdatePet = ({ pet }) => {
       body: formData,
     });
 
-    // TODO: VALIDASI (?)
-
     if (res.status === 200) {
       setLoading(false);
       toast.success("Update Pet successfully 👍");
-      setTimeout(() => router.push("/dashboard/pets"), 1000); // TODO: CHANGE TO MY PETS PAGE
+      setTimeout(() => router.push("/dashboard/pets"), 1000); 
+      router.refresh();
     }
   }
 

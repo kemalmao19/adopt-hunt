@@ -40,12 +40,11 @@ export const CreatePet = () => {
       body: formData,
     });
 
-    // TODO: VALIDASI (?)
-
     if (res.status === 201) {
       setLoading(false);
       toast.success("Add Pet successfully 👍");
       setTimeout(() => router.push("/dashboard/pets"), 1000);
+      router.refresh();
     }
   }
 

@@ -39,7 +39,7 @@ export const AdoptionProcess = ({
   const [submitStory, setSubmitStory] = useState({
     content: "",
   });
-  // const [rating, setRating] = useState("");
+  const [rating, setRating] = useState("");
   const [review, setReview] = useState("");
 
   const petId = pet.id;
@@ -69,13 +69,13 @@ export const AdoptionProcess = ({
     });
   };
 
-  // const handleRatingChange = (event) => {
-  //   const inputRating = event.target.value;
-  //   // Validate if the input is a number and within the desired range
-  //   if (!isNaN(inputRating) && inputRating >= 1 && inputRating <= 5) {
-  //     setRating(inputRating);
-  //   }
-  // };
+  const handleRatingChange = (event) => {
+    const inputRating = event.target.value;
+    // Validate if the input is a number and within the desired range
+    if (!isNaN(inputRating) && inputRating >= 1 && inputRating <= 5) {
+      setRating(inputRating);
+    }
+  };
 
   const handleReviewChange = (event) => {
     setReview(event.target.value);
@@ -150,6 +150,7 @@ export const AdoptionProcess = ({
       },
       body: JSON.stringify({
         content: review,
+        rating: Number(rating),
         adopterId: adopterId,
         userId: userId,
       }),
@@ -157,11 +158,11 @@ export const AdoptionProcess = ({
     // const dataReview = await resReview.json();
     // console.log({dataReview})
 
-    // console.log("Review:", review);
-    // console.log("Rating:", rating);
+    console.log("Review:", review);
+    console.log("Rating:", rating);
 
     setLoading(false);
-    toast.success("Story submit successfully!");
+    toast.success("Feedback submit successfully!");
     setTimeout(() => router.refresh(), 1000);
   }
 
@@ -186,7 +187,7 @@ export const AdoptionProcess = ({
       {isSubmit && <PetOwnerContact user={user} /> }
 
       {/* PET STATUS */}
-      <div className="p-5 rounded-2xl border-oren border-2 text-center bg-oren-light">
+      <div className={`p-5 rounded-2xl border-2 text-center ${isAdopted ? "border-oren bg-oren/10": "border-ungu bg-ungu/10"}`}>
         {isAdopted ? (
           <h3>
             <span className="text-red-500">Adopted</span> by{" "}
@@ -256,7 +257,7 @@ export const AdoptionProcess = ({
                             label="Write your review for the Pet Owner"
                             variant="bordered"
                           ></Textarea>
-                          {/* <div className="flex gap-1 pb-3">
+                          <div className="flex gap-1 pb-3">
                             <label>Rating: </label>
                             {[1, 2, 3, 4, 5].map((value) => (
                               <label key={value}>
@@ -276,7 +277,7 @@ export const AdoptionProcess = ({
                                 />
                               </label>
                             ))}
-                          </div> */}
+                          </div>
                           <Button
                             isLoading={loading}
                             isDisabled={loading}

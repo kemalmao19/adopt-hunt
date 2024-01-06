@@ -31,3 +31,22 @@ export async function getStories() {
   });
   return story;
 }
+
+export async function getReviews() {
+  const review = await prisma.review.findMany({
+    include: {
+      adopter: {
+        select: {
+          name: true
+        },
+      },
+      users: {
+        select: {
+          id: true,
+          username: true
+        },
+      }
+    }
+  });
+  return review;
+}

@@ -4,6 +4,7 @@ import { PetAbout } from "@/components/pets/components/PetAbout";
 import { PetInfo } from "@/components/pets/components/PetInfo";
 import { PetOwner } from "@/components/pets/components/PetOwner";
 import { checkEnvironment } from "@/config/apiUrl";
+import { getReviews } from "@/lib/fetchFunc";
 
 async function getPet(id) {
   const res = await fetch(`${checkEnvironment()}/api/pets/${id}`, {
@@ -37,20 +38,12 @@ async function getStory() {
   return data;
 }
 
-async function getReview() {
-  const res = await fetch(`${checkEnvironment()}/api/review/`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-}
-
 export default async function Page({ params }) {
   const { id } = params;
   const { pet } = await getPet(id);
   const { adopters } = await getAdopter();
   const { story } = await getStory();
-  const { review } = await getReview();
+  const review = await getReviews();
 
   const userId = pet.userId;
   const petId = pet.id;
@@ -71,17 +64,11 @@ export default async function Page({ params }) {
     return story.filter((item) => item.petId === petId)
   }
 
-  // filter review
-  const filterReview = (review) => {
-    return review.filter((item) => item.userId === userId)
-  }
-
   const potentialAdopter = filterDataByPetId(adopters);
   const adopter = filterAdopter(potentialAdopter);
   const storyAdopter = filterStory(story);
-  const reviews = filterReview(review);
 
-  // console.log(storyAdopter);
+  // console.log(review);
 
   return (
     <>
@@ -93,7 +80,7 @@ export default async function Page({ params }) {
         </div>
         {/* RIGHT */}
         <div className="space-y-6">
-          <PetOwner user={user} reviews={reviews} />
+          <PetOwner user={user} review={review}/>
           <AdoptionProcess pet={pet} user={user} potentialAdopter={potentialAdopter} adopter={adopter} storyAdopter={storyAdopter} />
           <AdopterStory storyAdopter={storyAdopter} adopter={adopter}/>
         </div>

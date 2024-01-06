@@ -5,7 +5,7 @@ export const PetStatus = ({ pet, adopter }) => {
   const adopterName = adopter[0]?.name;
 
   return (
-    <div className="p-5 rounded-2xl border-oren border-2 text-center bg-oren-light">
+    <div className={`p-5 rounded-2xl border-2 border-dashed text-center bg-oren-light ${isAdopted ? "border-oren" : "border-green-500" }`}>
       <h3>
         {isAdopted ? (
           <>
