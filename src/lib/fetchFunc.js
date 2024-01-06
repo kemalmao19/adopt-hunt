@@ -80,7 +80,8 @@ export async function getPetDetails(id) {
       },
       adopters: {
         select: {
-          name: true
+          name: true,
+          isAdopter: true,
         },
       },
       stories: {
