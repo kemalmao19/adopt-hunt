@@ -15,9 +15,13 @@ async function getPets() {
   return pets;
 }
 
+const filterIsDeleted = (pets) => {
+  return pets.filter((pet) => !pet.isDeleted);
+}
+
 export default async function Page() {
-  const pets = await getPets();
-  console.log(pets)
+  const data = await getPets();
+  const pets = filterIsDeleted(data);
 
   return (
     <>
