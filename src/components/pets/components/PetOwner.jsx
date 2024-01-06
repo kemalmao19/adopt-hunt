@@ -5,20 +5,18 @@ import { MapPin } from "lucide-react";
 import { useState } from "react";
 
 export const PetOwner = ({ user, review }) => {
-  const userId = user.id;
-  const adopterReviews = review.filter((item) => item.users.id === userId);
-  const isReview = adopterReviews.length > 0;
+  const isReview = review.length > 0;
 
   const calculateAverageRating = () => {
-    if (adopterReviews.length === 0) {
+    if (review.length === 0) {
       return 0;
     }
 
-    const totalRating = adopterReviews.reduce(
+    const totalRating = review.reduce(
       (sum, item) => sum + item.rating,
       0
     );
-    return totalRating / adopterReviews.length;
+    return totalRating / review.length;
   };
 
   const [averageRating, setAverageRating] = useState(calculateAverageRating);
@@ -68,7 +66,7 @@ export const PetOwner = ({ user, review }) => {
         <div className="border border-dashed px-2 rounded-xl mt-5">
           <h3 className="text-[18px]">Reviews:</h3>
           <div className="max-h-[200px] overflow-auto">
-            {adopterReviews.map(({ id, content, rating, adopter }) => {
+            {review.map(({ id, content, rating, adopter }) => {
               const filledStars = Math.floor(rating);
 
               return (

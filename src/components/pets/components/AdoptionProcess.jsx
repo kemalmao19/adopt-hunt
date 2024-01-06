@@ -43,7 +43,7 @@ export const AdoptionProcess = ({
   const [review, setReview] = useState("");
 
   const petId = pet.id;
-  const userId = pet.userId;
+  const userId = user.id;
 
   const isPotentialAdopter = potentialAdopter.length > 0;
   const isAdopted = pet.isAdopted === true;

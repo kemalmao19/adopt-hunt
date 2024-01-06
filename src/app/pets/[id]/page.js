@@ -3,88 +3,63 @@ import { AdoptionProcess } from "@/components/pets/components/AdoptionProcess";
 import { PetAbout } from "@/components/pets/components/PetAbout";
 import { PetInfo } from "@/components/pets/components/PetInfo";
 import { PetOwner } from "@/components/pets/components/PetOwner";
-import { checkEnvironment } from "@/config/apiUrl";
-import { getReviews } from "@/lib/fetchFunc";
-
-async function getPet(id) {
-  const res = await fetch(`${checkEnvironment()}/api/pets/${id}`, {
-    cache: "no-cache",
-  });
-  const data = await res.json();
-  return data;
-}
-
-async function getPetOwner(id) {
-  const res = await fetch(`${checkEnvironment()}/api/users/${id}`, {
-    cache: "no-cache",
-  });
-  const data = await res.json();
-  return data;
-}
-
-async function getAdopter() {
-  const res = await fetch(`${checkEnvironment()}/api/adopter/`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-}
-
-async function getStory() {
-  const res = await fetch(`${checkEnvironment()}/api/story/`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data;
-}
+import { getPetDetails} from "@/lib/fetchFunc";
 
 export default async function Page({ params }) {
   const { id } = params;
-  const { pet } = await getPet(id);
-  const { adopters } = await getAdopter();
-  const { story } = await getStory();
-  const review = await getReviews();
+  let [petDetails] = await getPetDetails(id);
 
-  const userId = pet.userId;
-  const petId = pet.id;
-  const { user } = await getPetOwner(userId);
-
-  // filter adopters by the same petId
-  const filterDataByPetId = (adopters) => {
-    return adopters.filter((item) => item.petId === petId);
-  };
-
-  // filter adopter
-  const filterAdopter = (potentialAdopter) => {
-    return potentialAdopter.filter((item) => item.isAdopter === true);
-  };
-
-  // filter story
-  const filterStory = (story) => {
-    return story.filter((item) => item.petId === petId)
+  const petInfo = {
+    id: petDetails.id,
+    name: petDetails.name,
+    description: petDetails.description,
+    breed: petDetails.breed,
+    category: petDetails.category,
+    gender: petDetails.gender,
+    health_status: petDetails.health_status,
+    age: petDetails.age,
+    images: petDetails.images,
+    isAdopted: petDetails.isAdopted,
   }
 
-  const potentialAdopter = filterDataByPetId(adopters);
-  const adopter = filterAdopter(potentialAdopter);
-  const storyAdopter = filterStory(story);
+  const userInfo = {
+    id: petDetails.users.id,
+    username: petDetails.users.username,
+    bio: petDetails.users.bio,
+    domicile: petDetails.users.domicile,
+    contact: petDetails.users.contact,
+  }
 
-  // console.log(review);
+  const adopterInfo = petDetails.adopters
+
+  const storiesInfo = petDetails.stories
+
+  const reviewInfo = petDetails.users.reviews
+  console.log(reviewInfo)
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 mt-5">
         {/* LEFT */}
         <div className="md:col-span-1 lg:col-span-2">
-          <PetInfo pet={pet} />
-          <PetAbout pet={pet} />
+          <PetInfo pet={petInfo} />
+          <PetAbout pet={petInfo} />
         </div>
         {/* RIGHT */}
         <div className="space-y-6">
-          <PetOwner user={user} review={review}/>
-          <AdoptionProcess pet={pet} user={user} potentialAdopter={potentialAdopter} adopter={adopter} storyAdopter={storyAdopter} />
-          <AdopterStory storyAdopter={storyAdopter} adopter={adopter}/>
+          <PetOwner user={userInfo} review={reviewInfo} />
+          <AdoptionProcess
+            pet={petInfo}
+            user={userInfo}
+            potentialAdopter={adopterInfo}
+            adopter={adopterInfo}
+            storyAdopter={storiesInfo}
+          />
+          <AdopterStory storyAdopter={storiesInfo} adopter={adopterInfo} />
         </div>
       </div>
     </>
   );
 }
+
+export const dynamic = "force-dynamic";
