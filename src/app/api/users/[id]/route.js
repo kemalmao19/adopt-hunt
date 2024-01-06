@@ -2,25 +2,33 @@
 import prisma from "@/utils/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(request, { params }) {
-    const { id } = params;
-    const user = await prisma.user.findUnique({
-        where: {
-            id,
+export async function GET({ params }) {
+  const { id } = params;
+  const user = await prisma.user.findUnique({
+    include: {
+      reviews: {
+        select: {
+          content: true,
+          adopterId: true,
         },
-    });
-    return NextResponse.json({ user }, { status: 200 });
+      },
+    },
+    where: {
+      id,
+    },
+  });
+  return NextResponse.json({ user }, { status: 200 });
 }
 
 // update user information by id
 export async function PUT(request, { params }) {
-    const { id } = params;
-    const data = await request.json();
-    const user = await prisma.user.update({
-        where: {
-            id,
-        },
-        data,
-    });
-    return NextResponse.json({ user }, { status: 200 });
+  const { id } = params;
+  const data = await request.json();
+  const user = await prisma.user.update({
+    where: {
+      id,
+    },
+    data,
+  });
+  return NextResponse.json({ user }, { status: 200 });
 }

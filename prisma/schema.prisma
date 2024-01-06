@@ -63,6 +63,7 @@ model Adopter {
 model Review {
   id        String  @id @default(uuid())
   content   String?
+  rating    Int?
   adopterId String
   userId    String
 
@@ -76,6 +77,7 @@ model Story {
   rating    Int?
   adopterId String
   petId     String
+  
   adopter   Adopter @relation(fields: [adopterId], references: [id])
   pets      Pet     @relation(fields: [petId], references: [id])
 }
