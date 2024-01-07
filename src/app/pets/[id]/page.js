@@ -44,8 +44,8 @@ export default async function Page({ params }) {
   const adopterEmail = filterAdopter(adopterInfo)[0]?.email;
 
   const reviewInfo = petDetails.users.reviews;
-  console.log(storiesInfo);
-  console.log(reviewInfo);
+  // console.log(storiesInfo);
+  // console.log(reviewInfo);
 
   return (
     <>
