@@ -64,6 +64,8 @@ export default async function Page({ params }) {
 
   const potentialAdopter = filterDataByPetId(adopters);
   const adopter = filterAdopter(potentialAdopter);
+  const adopterName = adopter[0].name;
+  console.log(adopter[0].name);
   const storyAdopter = filterStory(story);
 
   return (
@@ -78,7 +80,7 @@ export default async function Page({ params }) {
         <div className="space-y-6 pt-10">
           <PetStatus pet={pet} adopter={adopter} />
           <AdopterReview review={review} adopter={adopter}/>
-          <AdopterStory storyAdopter={storyAdopter} adopter={adopter} />
+          <AdopterStory storyAdopter={storyAdopter} adopter={adopter} adopterName={adopterName}/>
           <PotentialAdopter potentialAdopter={potentialAdopter} pet={pet} />
         </div>
       </div>
