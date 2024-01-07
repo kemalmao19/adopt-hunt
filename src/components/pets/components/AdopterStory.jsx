@@ -17,7 +17,7 @@ export const AdopterStory = ({ storyAdopter, adopter }) => {
             startContent={<UserRoundCheck size={18} />}
             className="bg-purple-100 text-black"
           >
-            {storyAdopter[0]?.adopter.name}
+            {adopter}
           </Chip>
         </div>
       ) : null}
