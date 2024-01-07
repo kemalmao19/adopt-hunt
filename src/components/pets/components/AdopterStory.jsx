@@ -2,7 +2,7 @@ import { Chip } from "@nextui-org/react";
 import { UserRoundCheck } from "lucide-react";
 import React from "react";
 
-export const AdopterStory = ({ storyAdopter, adopter }) => {
+export const AdopterStory = ({ storyAdopter, adopter, adopterName }) => {
   const isStory = storyAdopter.length > 0;
 
   return (
@@ -17,7 +17,7 @@ export const AdopterStory = ({ storyAdopter, adopter }) => {
             startContent={<UserRoundCheck size={18} />}
             className="bg-purple-100 text-black"
           >
-            {adopter}
+            {adopterName}
           </Chip>
         </div>
       ) : null}

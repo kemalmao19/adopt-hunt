@@ -68,7 +68,7 @@ export default async function Page({ params }) {
             idAdopter={adopterId}
             storyAdopter={storiesInfo}
           />
-          <AdopterStory storyAdopter={storiesInfo} adopter={adopterName} />
+          <AdopterStory storyAdopter={storiesInfo} adopter={adopterInfo} adopterName={adopterName} />
         </div>
       </div>
     </>
