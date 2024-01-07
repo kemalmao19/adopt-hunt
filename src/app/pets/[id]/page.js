@@ -31,8 +31,6 @@ export default async function Page({ params }) {
   };
 
   const adopterInfo = petDetails.adopters;
-  const adopterId = adopterInfo[0]?.id;
-  console
 
   const storiesInfo = petDetails.stories;
 
@@ -42,10 +40,9 @@ export default async function Page({ params }) {
 
   const adopterName = filterAdopter(adopterInfo)[0]?.name;
   const adopterEmail = filterAdopter(adopterInfo)[0]?.email;
+  const adopterId = filterAdopter(adopterInfo)[0]?.id;
 
   const reviewInfo = petDetails.users.reviews;
-  // console.log(storiesInfo);
-  // console.log(reviewInfo);
 
   return (
     <>
@@ -68,7 +65,11 @@ export default async function Page({ params }) {
             idAdopter={adopterId}
             storyAdopter={storiesInfo}
           />
-          <AdopterStory storyAdopter={storiesInfo} adopter={adopterInfo} adopterName={adopterName} />
+          <AdopterStory
+            storyAdopter={storiesInfo}
+            adopter={adopterInfo}
+            adopterName={adopterName}
+          />
         </div>
       </div>
     </>

@@ -64,8 +64,8 @@ export default async function Page({ params }) {
 
   const potentialAdopter = filterDataByPetId(adopters);
   const adopter = filterAdopter(potentialAdopter);
-  const adopterName = adopter[0].name;
-  console.log(adopter[0].name);
+  const adopterName = adopter[0]?.name;
+  // console.log(adopter[0].name);
   const storyAdopter = filterStory(story);
 
   return (
