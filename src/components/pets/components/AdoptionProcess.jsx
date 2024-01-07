@@ -22,8 +22,9 @@ export const AdoptionProcess = ({
   pet,
   user,
   potentialAdopter,
-  adopter,
+  idAdopter,
   nameAdopter,
+  emailAdopter,
   storyAdopter,
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -50,9 +51,9 @@ export const AdoptionProcess = ({
   const isAdopted = pet.isAdopted === true;
   const isStory = storyAdopter.length > 0;
 
-  const adopterId = adopter[0]?.id;
+  const adopterId = idAdopter;
   const adopterName = nameAdopter;
-  const adopterEmail = adopter[0]?.email;
+  const adopterEmail = emailAdopter;
 
   const [submittedEmail, setSubmittedEmail] = useState("");
   const [storedEmail, setStoredEmail] = useState(adopterEmail);
@@ -158,9 +159,8 @@ export const AdoptionProcess = ({
     });
     // const dataReview = await resReview.json();
     // console.log({dataReview})
-
-    console.log("Review:", review);
-    console.log("Rating:", rating);
+    // console.log("Review:", review);
+    // console.log("Rating:", rating);
 
     setLoading(false);
     toast.success("Feedback submit successfully!");

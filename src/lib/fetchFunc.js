@@ -1,6 +1,9 @@
 import prisma from "@/utils/prisma";
 export async function getPets() {
   const pets = await prisma.pet.findMany({
+    where: {
+      isDeleted: false,
+    },
     include: {
       users: {
         select: {
@@ -80,7 +83,9 @@ export async function getPetDetails(id) {
       },
       adopters: {
         select: {
+          id: true,
           name: true,
+          email: true,
           isAdopter: true,
         },
       },
