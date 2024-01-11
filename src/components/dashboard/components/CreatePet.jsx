@@ -1,5 +1,6 @@
 "use client";
 
+import { FileSelector, ImagePreview } from "@/components/FileSelector";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -48,6 +49,14 @@ export const CreatePet = () => {
     }
   }
 
+  const [images, setImages] = useState([]);
+  const handlePreview = (e) => {
+    if (e.target.files) {
+      const _files = Array.from(e.target.files);
+      setImages(_files);
+    }
+  };
+
   return (
     <>
       <h2 className="mt-20 mb-10 text-center">
@@ -72,7 +81,13 @@ export const CreatePet = () => {
           <Input name="healthStatus" label="Health status" />
         </div>
         <Textarea name="description" label="Description" className="my-4" />
-        <input name="images" type="file" multiple className="my-4 block w-full bg-gray-100 rounded-xl p-2" />
+        {/* <input name="images" type="file" multiple className="my-4 block w-full bg-gray-100 rounded-xl p-2" /> */}
+        <FileSelector
+          name="images"
+          accept="image/png, image/jpeg"
+          onChange={handlePreview}
+        />
+        <ImagePreview images={images} />
         <Button
           isLoading={loading}
           isDisabled={loading}
