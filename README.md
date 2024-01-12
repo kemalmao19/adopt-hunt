@@ -1,5 +1,8 @@
 # Project Adopt Hunt
 
+![image](https://github.com/kemalmao19/adopt-hunt/assets/128290445/a1d10dc3-fbcd-497c-b34e-78394160fad3)
+
+
 ## How to use
 
 Please follow the steps below to run the project.
